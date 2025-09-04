@@ -1,23 +1,23 @@
 <script setup>
-import { computed,ref } from 'vue'
+import { computed, ref } from 'vue'
 import { MainContent } from './index.js'
-import { products, containers } from '../mock-api/product.js';
+import { products, containers } from '../mock-api/product.js'
 
 const calculateDiscountedPrice = (product) => {
   if (product.interest > 0) {
-    const discount = product.originalPrice * (product.interest / 100);
-    return Math.round(product.originalPrice - discount);
+    const discount = product.originalPrice * (product.interest / 100)
+    return Math.round(product.originalPrice - discount)
   }
-  return product.originalPrice;
+  return product.originalPrice
 }
 
 const formatPrice = (price) => {
-  return `${price} руб`;
+  return `${price} руб`
 }
-const likeProducts =ref({})
+const likeProducts = ref({})
 
-const toggleLike = (productId)=>{
-  likeProducts.value[productId] =!likeProducts.value[productId]
+const toggleLike = (productId) => {
+  likeProducts.value[productId] = !likeProducts.value[productId]
 }
 const isProductLiked = (productId) => {
   return !!likeProducts.value[productId]
@@ -26,12 +26,12 @@ const isProductLiked = (productId) => {
 
 <template>
   <div class="container">
-    <div 
+    <div
       v-for="(productIds, index) in containers"
       :key="index"
       class="conteiner-1"
     >
-      <MainContent 
+      <MainContent
         v-for="productId in productIds"
         :key="productId"
         :image="products[productId].image"
@@ -46,19 +46,17 @@ const isProductLiked = (productId) => {
     </div>
   </div>
 </template>
-<style>
-
-</style>
+<style></style>
 <style scoped>
 .conteiner-1 {
   height: 325px;
   width: 840px;
   border: 1px;
-  background-color:#EAE9E8;
+  background-color: #eae9e8;
   display: flex;
   align-items: row;
   gap: 15px;
-  margin-top: 180px;
+  margin-top: 130px;
 }
 
 .container {
