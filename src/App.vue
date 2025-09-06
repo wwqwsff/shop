@@ -1,20 +1,23 @@
 <script setup>
-import { Main, Header, Title } from './components'
+import { Main, Title } from './components'
+import LoyoutHeader from './layouts/LoyoutHeader.vue'
 </script>
 
 <template>
-  <div class="app">
-    <Header class="header-content"></Header>
-    <Title
-      class="title-content"
-      text="КОФТЫ И ПИДЖАКИ"
-      color="dark-blue"
-      style="style1"
-      size="size25"
-    ></Title>
-    <Main class="main-content"></Main>
-  </div>
+  <LoyoutHeader>
+    <div class="app">
+      <Title
+        class="title-content"
+        text="КОФТЫ И ПИДЖАКИ"
+        color="dark-blue"
+        style="style1"
+        size="size25"
+      ></Title>
+      <Main class="main-content"></Main>
+    </div>
+  </LoyoutHeader>
 </template>
+
 <style>
 html,
 body {
@@ -25,6 +28,7 @@ body {
   background-color: #eae9e8;
 }
 </style>
+
 <style scoped>
 .app {
   display: flex;
