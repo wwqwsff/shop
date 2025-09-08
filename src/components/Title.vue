@@ -15,11 +15,17 @@ const props = defineProps({
   style: {
     type: String,
     defult: ''
+  },
+  left: {
+    type: String,
+    defult: ''
   }
 })
 </script>
 <template>
-  <p :class="[size, color, style]">{{ text }}</p>
+  <div :class="[left]">
+    <p :class="[size, color, style]">{{ text }}</p>
+  </div>
 </template>
 <style scoped>
 .size25 {
@@ -30,5 +36,8 @@ const props = defineProps({
 }
 .style1 {
   font-family: 'Avenir';
+}
+.marginl {
+  margin-left: -600px;
 }
 </style>

@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { MainContent } from './index.js'
+import { CardItem } from './index.js'
 import { products, containers } from '../mock-api/product.js'
 
 const calculateDiscountedPrice = (product) => {
@@ -29,9 +29,9 @@ const isProductLiked = (productId) => {
     <div
       v-for="(productIds, index) in containers"
       :key="index"
-      class="conteiner-1"
+      class="conteiner-next"
     >
-      <MainContent
+      <CardItem
         v-for="productId in productIds"
         :key="productId"
         :image="products[productId].image"
@@ -46,22 +46,28 @@ const isProductLiked = (productId) => {
     </div>
   </div>
 </template>
-<style></style>
 <style scoped>
-.conteiner-1 {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.conteiner-next {
   height: 325px;
   width: 840px;
   border: 1px;
   background-color: #eae9e8;
   display: flex;
-  align-items: row;
+  flex-direction: row;
   gap: 15px;
   margin-top: 130px;
+  flex-wrap: wrap;
 }
 
 .container {
   flex-direction: column;
-  gap: 10px;
+  gap: 30px;
   display: flex;
+  margin-bottom: 200px;
 }
 </style>

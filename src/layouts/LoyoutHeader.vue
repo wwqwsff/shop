@@ -11,4 +11,12 @@ import Header from '../components/Header.vue'
   </div>
 </template>
 
-<style scoped></style>
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #eae9e8;
+}
+</style>

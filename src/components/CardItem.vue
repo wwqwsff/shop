@@ -82,12 +82,14 @@ const hasDiscounter = computed(() => props.interest > 0)
   background-position: center;
   background-repeat: no-repeat;
 }
+
 .container-1-info-text {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 5px;
   font-family: 'Jost', sans-serif;
+  background-color: #eae9e8;
 }
 .conteiner-name {
   font-weight: bold;
