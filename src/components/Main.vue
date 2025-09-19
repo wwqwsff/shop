@@ -1,47 +1,73 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { CardItem } from './index.js'
-import { products, containers } from '../mock-api/product.js'
+import api from '../api/index.js'
+
+const products = ref([]) // исправлено с product на products
+const loading = ref(true)
+const error = ref(null)
+const likeProducts = ref({})
+
+const fetchProducts = async () => {
+  try {
+    loading.value = true
+    const response = await api.getProductsByCategory('womens-dresses', 12)
+    products.value = response.products
+  } catch (err) {
+    error.value = 'Не удалось загрузить товары'
+    console.error('Ошибка загрузи товаров:', err)
+  } finally {
+    loading.value = false
+  }
+}
 
 const calculateDiscountedPrice = (product) => {
-  if (product.interest > 0) {
-    const discount = product.originalPrice * (product.interest / 100)
-    return Math.round(product.originalPrice - discount)
+  if (product.discountPercentage > 0) {
+    const discount = product.price * (product.discountPercentage / 100)
+    return Math.round(product.price - discount)
   }
-  return product.originalPrice
+  return product.price
 }
-
-const formatPrice = (price) => {
-  return `${price} руб`
-}
-const likeProducts = ref({})
 
 const toggleLike = (productId) => {
   likeProducts.value[productId] = !likeProducts.value[productId]
 }
+
 const isProductLiked = (productId) => {
   return !!likeProducts.value[productId]
 }
+
+const productContainers = computed(() => {
+  const containers = []
+  for (let i = 0; i < products.value.length; i += 3) {
+    containers.push(products.value.slice(i, i + 3))
+  }
+  return containers
+})
+
+onMounted(() => {
+  fetchProducts()
+})
 </script>
 
 <template>
   <div class="container">
     <div
-      v-for="(productIds, index) in containers"
+      v-for="(productGroup, index) in productContainers"
       :key="index"
       class="conteiner-next"
     >
       <CardItem
-        v-for="productId in productIds"
-        :key="productId"
-        :image="products[productId].image"
-        :nameProduct="products[productId].nameProduct"
-        :price="formatPrice(calculateDiscountedPrice(products[productId]))"
-        :originalPrice="formatPrice(products[productId].originalPrice)"
-        :categories="products[productId].categories"
-        :isLiked="isProductLiked(productId)"
-        :interest="products[productId].interest"
-        @toggle-like="toggleLike(productId)"
+        v-for="product in productGroup"
+        :key="product.id"
+        :image="product.thumbnail"
+        :nameProduct="product.title"
+        :price="calculateDiscountedPrice(product)"
+        :originalPrice="product.price"
+        :categories="product.category"
+        :interest="product.discountPercentage"
+        :productId="product.id"
+        @toggle-like="toggleLike"
       />
     </div>
   </div>

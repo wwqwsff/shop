@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import { Svg } from './index'
 
 const props = defineProps({
@@ -12,31 +12,56 @@ const props = defineProps({
     default: 'Name product'
   },
   price: {
-    type: String,
-    default: '0 uan'
+    type: Number, // меняем на Number
+    default: 0
   },
   originalPrice: {
-    type: String,
-    default: '0 uan'
+    type: Number, // меняем на Number
+    default: 0
   },
   categories: {
-    type: String,
-    default: '0 uan'
+    type: [String, Array], // может быть и массивом
+    default: ''
   },
   isLiked: {
     type: Boolean,
     default: false
   },
   interest: {
-    type: String,
+    type: [String, Number],
     default: 0
+  },
+  productId: {
+    type: [String, Number],
+    required: true
   }
 })
+
 const emit = defineEmits(['toggle-like'])
+
 const toggleLike = () => {
-  emit('toggle-like')
+  emit('toggle-like', props.productId)
 }
-const hasDiscounter = computed(() => props.interest > 0)
+
+const hasDiscounter = computed(() => {
+  const discount = Number(props.interest)
+  return !isNaN(discount) && discount > 0
+})
+
+const formattedPrice = computed(() => {
+  return `${props.price} руб`
+})
+
+const formattedOriginalPrice = computed(() => {
+  return `${props.originalPrice} руб`
+})
+
+const categoriesString = computed(() => {
+  if (Array.isArray(props.categories)) {
+    return props.categories.join(', ')
+  }
+  return props.categories
+})
 </script>
 
 <template>
@@ -59,17 +84,18 @@ const hasDiscounter = computed(() => props.interest > 0)
     </button>
     <div class="container-1-info-text">
       <p class="conteiner-name">{{ nameProduct }}</p>
-      <p class="conteiner-categories">{{ categories }}</p>
+      <p class="conteiner-categories">{{ categoriesString }}</p>
       <div class="price-container">
-        <p class="original-price" v-if="hasDiscounter">{{ originalPrice }}</p>
+        <p class="original-price" v-if="hasDiscounter">
+          {{ formattedOriginalPrice }}
+        </p>
         <p class="conteiner-price" :class="{ 'discount-prise': hasDiscounter }">
-          {{ price }}
+          {{ formattedPrice }}
         </p>
       </div>
     </div>
   </div>
 </template>
-
 <style scoped>
 .product {
   position: relative;

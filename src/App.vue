@@ -1,6 +1,6 @@
 <script setup>
 import { Main, Title } from './components'
-import Loyout from './layouts/LoyoutHeader.vue'
+import Loyout from './layouts/Loyout.vue'
 </script>
 
 <template>
@@ -13,8 +13,8 @@ import Loyout from './layouts/LoyoutHeader.vue'
         style="style1"
         size="size25"
         left="marginl"
-      />
-      <Main />
+      ></Title>
+      <Main></Main>
     </div>
   </Loyout>
 </template>
