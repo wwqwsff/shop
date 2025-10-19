@@ -1,32 +1,23 @@
 <script setup>
-import { Main, Title } from './components'
+import { RouterView } from 'vue-router'
 import Loyout from './layouts/Loyout.vue'
+import Sidebar from './components/Sidebar.vue'
 </script>
 
 <template>
-  <Loyout>
-    <div class="app">
-      <Title
-        class="title-content"
-        text="КОФТЫ И ПИДЖАКИ"
-        color="dark-blue"
-        style="style1"
-        size="size25"
-        left="marginl"
-      ></Title>
-      <Main></Main>
-    </div>
-  </Loyout>
+  <Loyout class="layout"> </Loyout>
+  <Sidebar class="sidebar"></Sidebar>
+
+  <div class="app">
+    <RouterView class="content"></RouterView>
+  </div>
 </template>
 
 <style scoped>
 .app {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.title-content {
-  display: flex;
-  justify-content: left;
+  margin-left: 200px;
+  justify-content: center;
+  margin-top: -495px;
+  padding-left: 130px;
 }
 </style>

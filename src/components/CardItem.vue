@@ -12,15 +12,15 @@ const props = defineProps({
     default: 'Name product'
   },
   price: {
-    type: Number, // меняем на Number
+    type: Number,
     default: 0
   },
   originalPrice: {
-    type: Number, // меняем на Number
+    type: Number,
     default: 0
   },
   categories: {
-    type: [String, Array], // может быть и массивом
+    type: [String, Array],
     default: ''
   },
   isLiked: {
@@ -49,11 +49,11 @@ const hasDiscounter = computed(() => {
 })
 
 const formattedPrice = computed(() => {
-  return `${props.price} руб`
+  return `${props.price * 100} руб`
 })
 
 const formattedOriginalPrice = computed(() => {
-  return `${props.originalPrice} руб`
+  return `${props.originalPrice * 100} руб`
 })
 
 const categoriesString = computed(() => {
@@ -71,7 +71,7 @@ const categoriesString = computed(() => {
       :style="{ backgroundImage: image ? `url(${image})` : 'none' }"
     ></div>
     <div v-if="hasDiscounter" class="sale">
-      <p class="interest-p">{{ interest }}%</p>
+      <p class="interest-p">{{ Math.round(interest) }}%</p>
     </div>
     <button class="like-btn" @click="toggleLike">
       <Svg

@@ -1,32 +1,16 @@
 <script setup>
-import { computed, ref, onMounted } from 'vue'
-import { CardItem } from './index.js'
-import api from '../api/index.js'
+import { computed, ref } from 'vue'
+import CardItem from '../components/CardItem.vue'
+import { productsTS, containers } from '../mock-api/product.js'
 
-const products = ref([])
-const loading = ref(true)
-const error = ref(null)
 const likeProducts = ref({})
 
-const fetchProducts = async () => {
-  try {
-    loading.value = true
-    const response = await api.getProductsByCategory('womens-dresses', 20)
-    products.value = response.products
-  } catch (err) {
-    error.value = 'Не удалось загрузить товары'
-    console.error('Ошибка загрузи товаров:', err)
-  } finally {
-    loading.value = false
-  }
-}
-
 const calculateDiscountedPrice = (product) => {
-  if (product.discountPercentage > 0) {
-    const discount = product.price * (product.discountPercentage / 100)
-    return Math.round(product.price - discount)
+  if (product.interest > 0) {
+    const discount = product.originalPrice * (product.interest / 100)
+    return Math.round(product.originalPrice - discount)
   }
-  return product.price
+  return product.originalPrice
 }
 
 const toggleLike = (productId) => {
@@ -38,21 +22,22 @@ const isProductLiked = (productId) => {
 }
 
 const productContainers = computed(() => {
-  const containers = []
-  for (let i = 0; i < products.value.length; i += 3) {
-    containers.push(products.value.slice(i, i + 3))
-  }
-  return containers
-})
-
-onMounted(() => {
-  fetchProducts()
+  return containers.map((container) =>
+    container.map((productId) => {
+      const product = productsTS[productId]
+      return {
+        id: productId,
+        ...product,
+        price: calculateDiscountedPrice(product)
+      }
+    })
+  )
 })
 </script>
 
 <template>
   <div class="base">
-    <h1 class="title">ВСЕ ТОВАРЫ</h1>
+    <h1 class="title">ФУТБОЛКИ И ТОПЫ</h1>
     <div class="container">
       <div
         v-for="(productGroup, index) in productContainers"
@@ -62,12 +47,12 @@ onMounted(() => {
         <CardItem
           v-for="product in productGroup"
           :key="product.id"
-          :image="product.thumbnail"
-          :nameProduct="product.title"
-          :price="calculateDiscountedPrice(product)"
-          :originalPrice="product.price"
-          :categories="product.category"
-          :interest="product.discountPercentage"
+          :image="product.image"
+          :nameProduct="product.nameProduct"
+          :price="product.price"
+          :originalPrice="product.originalPrice"
+          :categories="product.categories"
+          :interest="product.interest"
           :productId="product.id"
           :isLiked="isProductLiked(product.id)"
           @toggle-like="toggleLike"
@@ -76,6 +61,7 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
 <style scoped>
 * {
   margin: 0;
@@ -85,7 +71,9 @@ onMounted(() => {
 .title {
   font-family: 'Avenir';
   font-size: 25px;
+  white-space: nowrap;
   color: #0f303f;
+  position: sticky;
 }
 .conteiner-next {
   height: 325px;

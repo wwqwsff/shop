@@ -10,4 +10,4 @@ export const HTTP_STATUS = {
   NOT_FOUND: 404,
   SERVER_ERROR: 500
 }
-export const PRODUCTS_LIMIT = 10
+export const PRODUCTS_LIMIT = 20

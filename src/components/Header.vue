@@ -71,18 +71,20 @@ const handleLanguageClick = (language) => {
 
 <style scoped>
 .header {
-  width: 1440px;
+  width: 100%;
   height: 43px;
   display: flex;
   align-items: row;
   gap: 400px;
+  margin-top: 5%;
+  padding: 0;
+
+  display: fixed;
 }
 .name {
-  width: 129px;
   height: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: left;
+
   font-family: 'Regular 90';
 }
 .btn-header {
@@ -93,6 +95,9 @@ const handleLanguageClick = (language) => {
 .name-t {
   color: #0f303f;
   font-size: 18px;
+  width: 100%;
+  margin-left: 50px;
+  white-space: nowrap;
 }
 .serch-t {
   font-family: 'Avenir';

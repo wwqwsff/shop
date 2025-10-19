@@ -4,7 +4,8 @@ import Header from '../components/Header.vue'
 
 <template>
   <div class="loyout">
-    <Header></Header>
+    <Header class="header"></Header>
+
     <main>
       <slot></slot>
     </main>
@@ -12,11 +13,21 @@ import Header from '../components/Header.vue'
 </template>
 
 <style>
+.header {
+  margin-bottom: 70px;
+}
 body {
-  margin: 0;
   padding: 0;
-  height: 100%;
-  width: 100%;
+  min-height: 100%;
+  min-width: 100%;
   background-color: #eae9e8;
+  position: relative;
+}
+</style>
+<style scoped>
+.loyout {
+  display: inline-block;
+  flex-direction: column;
+  text-align: center;
 }
 </style>
