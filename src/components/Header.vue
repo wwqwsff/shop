@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
-import { ButtonMenWomen, ButtonLanguage, Svg } from './index'
+import { BaseButton, Svg } from './index'
+
 
 const activeCategory = ref('women')
 const activeLanguage = ref('ru')
@@ -32,12 +33,12 @@ const handleLanguageClick = (language) => {
       <p class="name-t">A L L E G R I A</p>
     </div>
     <div class="btn-header">
-      <ButtonMenWomen
+      <BaseButton
         :text="categories.women.text"
         :is-active="activeCategory === 'women'"
         @click="handleCategoryClick('women')"
       />
-      <ButtonMenWomen
+      <BaseButton
         :text="categories.men.text"
         :is-active="activeCategory === 'men'"
         @click="handleCategoryClick('men')"
@@ -48,13 +49,13 @@ const handleLanguageClick = (language) => {
         <input type="text" class="input-s" placeholder="" />
       </div>
 
-      <ButtonLanguage
+      <BaseButton
         v-for="(language, key) in languages"
         :key="key"
         :text="language.text"
-        :is-active="activeLanguage === key"
+        :is-active-orange="activeLanguage === key"
         @click="handleLanguageClick(key)"
-        class="btn-lang"
+        
       />
       <div class="icon">
         <Svg

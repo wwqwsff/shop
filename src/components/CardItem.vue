@@ -69,11 +69,11 @@ const categoriesString = computed(() => {
     <div
       class="conteiner-1"
       :style="{ backgroundImage: image ? `url(${image})` : 'none' }"
-    ></div>
+    />
     <div v-if="hasDiscounter" class="sale">
       <p class="interest-p">{{ Math.round(interest) }}%</p>
     </div>
-    <button class="like-btn" @click="toggleLike">
+    <button class="like-btn" @click="toggleLike"/>
       <Svg
         class="svg"
         name="heart"
@@ -81,7 +81,7 @@ const categoriesString = computed(() => {
         :color="isLiked ? '#E64926' : '#0f303f'"
         :stroke-width="0.4"
       ></Svg>
-    </button>
+    
     <div class="container-1-info-text">
       <p class="conteiner-name">{{ nameProduct }}</p>
       <p class="conteiner-categories">{{ categoriesString }}</p>

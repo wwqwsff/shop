@@ -37,7 +37,7 @@ const productContainers = computed(() => {
 
 <template>
   <div class="base">
-    <h1 class="title">БРЮКИ И ШОРТЫ</h1>
+    <h1 class="title">Электорика</h1>
     <div class="container">
       <div
         v-for="(productGroup, index) in productContainers"
@@ -71,9 +71,9 @@ const productContainers = computed(() => {
 .title {
   font-family: 'Avenir';
   font-size: 25px;
-  position: sticky;
-  white-space: nowrap;
   color: #0f303f;
+  white-space: nowrap;
+  position: sticky;
 }
 .conteiner-next {
   height: 325px;

@@ -1,61 +1,88 @@
 <script setup>
-import { ref } from 'vue'
-import { ButtonMenWomen, SidebarElements } from './index'
+import { ref, computed } from 'vue'
+import { BaseButton, SidebarElements } from './index'
+
 
 const activeCategory = ref('women')
 const categories = {
   women: { text: 'ЖЕНЩИНЫ' },
   men: { text: 'МУЖЧИНЫ' }
 }
+
+
+const allMenuItems = {
+  women: [
+    {
+      title: 'ОДЕЖДА',
+      items: [
+        { title: 'Платья юбки' },
+        { title: 'Футболки и топы' },
+        { title: 'Брюки и шорты' }
+      ]
+    },
+    {
+      title: 'КОСМЕТИКА',
+      items: [{ title: 'Парфюмерия' }, { title: 'Макияж' }]
+    },
+    { title: 'ДЕКОР ДЛЯ ДОМА', items: [{ title: 'Все товары' }] },
+    {
+      title: 'УКРАШЕНИЯ',
+      items: [{ title: 'Украшения' }]
+    }
+  ],
+  men: [
+    {
+      title: 'МУЖЧИНАМ',
+      items: [
+        { title: 'Спортивные товары' },
+        { title: 'Бытовая техника' },
+        { title: 'Электроника' }
+      ]
+    }
+  ]
+}
+
+const activeIndex = ref(null)
+
 const handleCategoryClick = (category) => {
   activeCategory.value = category
+  activeIndex.value = null 
 }
-const menuItems = ref([
-  {
-    title: 'ОДЕЖДА',
-    items: [
-      { title: 'Платья юбки' },
-      { title: 'Футболки и топы' },
-      { title: 'Брюки и шорты' }
-    ]
-  },
-  {
-    title: 'ОБУВЬ',
-    items: [{ title: 'Кеды и кроссовки' }, { title: 'Туфли' }]
-  },
-  { title: 'СУМКИ', items: [{ title: 'Сумки' }] }
-])
-const activeIndex = ref(null)
 
 const setActiveIndex = (index) => {
   activeIndex.value = activeIndex.value === index ? null : index
 }
+
+
+const currentMenuItems = computed(() => {
+  return allMenuItems[activeCategory.value]
+})
 </script>
+
 <template>
   <div class="sidebar">
     <div class="btn">
-      <ButtonMenWomen
+      <BaseButton
         :text="categories.women.text"
         :is-active="activeCategory == 'women'"
         @click="handleCategoryClick('women')"
-      ></ButtonMenWomen>
-      <ButtonMenWomen
+      />
+      <BaseButton
         :text="categories.men.text"
         :is-active="activeCategory == 'men'"
         @click="handleCategoryClick('men')"
-      ></ButtonMenWomen>
+      />
     </div>
     <div class="menu">
       <ul class="nav-list">
         <SidebarElements
-          v-for="(item, index) in menuItems"
+          v-for="(item, index) in currentMenuItems"
           :key="index"
           :info="item.title"
           :items="item.items"
           :is-open="activeIndex === index"
           @toggle="setActiveIndex(index)"
-        >
-        </SidebarElements>
+        />
       </ul>
     </div>
   </div>

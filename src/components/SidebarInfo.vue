@@ -10,9 +10,12 @@ const categoryToRouteMap = {
   'Платья юбки': 'Main',
   'Футболки и топы': 'Tshirt',
   'Брюки и шорты': 'Trousers',
-  'Кеды и кроссовки': 'Sneaker',
-  Туфли: 'Shoes',
-  Сумки: 'Bag'
+  Парфюмерия: 'Sneakers',
+  Макияж: 'Shoes',
+  'Все товары': 'Bag',
+  'Спортивные товары': 'Sport',
+  'Бытовая техника': 'Texnic',
+  Электроника: 'Electronic'
 }
 
 const getRouteName = (category) => {

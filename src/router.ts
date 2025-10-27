@@ -1,12 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Dress from './views/Dress.vue'
-import HomePage from './views/HomePage.vue'
-import Main from './components/Main.vue'
-import Tshirt from './views/Tshirt.vue'
-import Trousers from './views/Trousers.vue'
-import Shoes from './views/Shoes.vue'
-import Sneakers from './views/Sneakers.vue'
-import Bag from './views/Bag.vue'
+import {
+  Dress,
+  HomePage,
+  Main,
+  Tshirt,
+  Trousers,
+  Shoes,
+  Sneakers,
+  Bag,
+  ManCatalog,
+  Sport,
+  Texnic,
+  Electronic
+} from './views'
 
 const routes = [
   {
@@ -40,13 +46,33 @@ const routes = [
   },
   {
     path: '/category/sneaker',
-    name: 'Sneaker',
+    name: 'Sneakers',
     component: Sneakers
   },
   {
     path: '/category/bag',
     name: 'Bag',
     component: Bag
+  },
+  {
+    path: '/menCatalog',
+    name: 'ManCatalog',
+    component: ManCatalog
+  },
+  {
+    path: '/category/sport',
+    name: 'Sport',
+    component: Sport
+  },
+  {
+    path: '/category/electronic',
+    name: 'Electronic',
+    component: Electronic
+  },
+  {
+    path: '/category/texnic',
+    name: 'Texnic',
+    component: Texnic
   }
 ]
 

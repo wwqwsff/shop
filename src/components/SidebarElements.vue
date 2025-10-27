@@ -46,7 +46,7 @@ watch(
     v-for="(item, index) in items"
     :key="index"
     :info="item.title"
-  ></SidebarInfo>
+  />
 </template>
 <style scoped>
 .info {
@@ -69,5 +69,6 @@ watch(
   position: absolute;
   font-size: 16px;
   font-family: 'Avenir';
+  text-decoration: none;
 }
 </style>

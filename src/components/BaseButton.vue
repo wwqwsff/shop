@@ -7,6 +7,10 @@ const props = defineProps({
   isActive: {
     type: Boolean,
     default: false
+  },
+  isActiveOrange:{
+    type: Boolean,
+    default:false
   }
 })
 const emit = defineEmits(['click'])
@@ -17,7 +21,8 @@ const handleClick = () => {
 <template>
   <button
     class="language"
-    :class="{ 'btn-active': isActive }"
+    :class="{ 'btn-active': isActive, 'btn-active-orange':isActiveOrange }"
+    
     @click="handleClick"
   >
     {{ text }}
@@ -40,6 +45,9 @@ const handleClick = () => {
   color: #0f303f;
 }
 .btn-active {
-  color: #e64926 !important;
+  color: #B7C1C5 !important;
+}
+.btn-active-orange{
+  color: #E64926 !important;
 }
 </style>
