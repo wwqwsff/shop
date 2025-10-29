@@ -1,10 +1,13 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { BaseButton, Svg } from './index'
 
+type Category = 'women' | 'men'
+type Language = 'ru'| 'en'
 
-const activeCategory = ref('women')
-const activeLanguage = ref('ru')
+ 
+const activeCategory = ref<Category>('women')
+const activeLanguage = ref<Language>('ru')
 const languages = {
   ru: { text: 'RU' },
   en: { text: 'EN' }
@@ -19,10 +22,10 @@ const icons = {
   2: { name: 'person', size: '16', color: '#0F303F' },
   3: { name: 'heart', size: '16', color: '#0F303F' }
 }
-const handleCategoryClick = (category) => {
+const handleCategoryClick = (category: Category) => {
   activeCategory.value = category
 }
-const handleLanguageClick = (language) => {
+const handleLanguageClick = (language: Language) => {
   activeLanguage.value = language
 }
 </script>
@@ -30,9 +33,9 @@ const handleLanguageClick = (language) => {
 <template>
   <div class="header">
     <div class="name">
-      <p class="name-t">A L L E G R I A</p>
+      <p class="name__text">A L L E G R I A</p>
     </div>
-    <div class="btn-header">
+    <div class="button">
       <BaseButton
         :text="categories.women.text"
         :is-active="activeCategory === 'women'"
@@ -45,8 +48,8 @@ const handleLanguageClick = (language) => {
       />
 
       <div class="serch">
-        <p class="serch-t">ПОИСК</p>
-        <input type="text" class="input-s" placeholder="" />
+        <p class="serch__text">ПОИСК</p>
+        <input type="text" class="serch__input" placeholder="" />
       </div>
 
       <BaseButton
@@ -88,19 +91,19 @@ const handleLanguageClick = (language) => {
 
   font-family: 'Regular 90';
 }
-.btn-header {
+.button {
   display: flex;
   flex-direction: row;
   gap: 30px;
 }
-.name-t {
+.name__text {
   color: #0f303f;
   font-size: 18px;
   width: 100%;
   margin-left: 50px;
   white-space: nowrap;
 }
-.serch-t {
+.serch__text {
   font-family: 'Avenir';
   color: #0f303f;
   font-size: 16px;
@@ -114,7 +117,7 @@ const handleLanguageClick = (language) => {
   width: 102px;
   margin-right: 200px;
 }
-.input-s {
+.serch__input {
   height: 16px;
   width: 150px;
   margin-top: 20px;

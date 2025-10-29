@@ -1,4 +1,4 @@
-<script setup>
+<script setup >
 import { computed } from 'vue'
 import { Svg } from './index'
 
@@ -28,7 +28,7 @@ const props = defineProps({
     default: false
   },
   interest: {
-    type: [String, Number],
+    type: [Number],
     default: 0
   },
   productId: {
@@ -49,11 +49,11 @@ const hasDiscounter = computed(() => {
 })
 
 const formattedPrice = computed(() => {
-  return `${props.price * 100} руб`
+  return `${props.price * 10} руб`
 })
 
 const formattedOriginalPrice = computed(() => {
-  return `${props.originalPrice * 100} руб`
+  return `${props.originalPrice * 10} руб`
 })
 
 const categoriesString = computed(() => {
@@ -67,29 +67,28 @@ const categoriesString = computed(() => {
 <template>
   <div class="product">
     <div
-      class="conteiner-1"
+      class="product__image"
       :style="{ backgroundImage: image ? `url(${image})` : 'none' }"
-    />
-    <div v-if="hasDiscounter" class="sale">
-      <p class="interest-p">{{ Math.round(interest) }}%</p>
+    ></div>
+    <div v-if="hasDiscounter" class="product__sale">
+      <p class="product__sale--text">{{ Math.round(interest) }}%</p>
     </div>
-    <button class="like-btn" @click="toggleLike"/>
+    <button class="button__like" @click="toggleLike">
       <Svg
-        class="svg"
         name="heart"
         :size="16"
         :color="isLiked ? '#E64926' : '#0f303f'"
         :stroke-width="0.4"
       ></Svg>
-    
-    <div class="container-1-info-text">
-      <p class="conteiner-name">{{ nameProduct }}</p>
-      <p class="conteiner-categories">{{ categoriesString }}</p>
-      <div class="price-container">
-        <p class="original-price" v-if="hasDiscounter">
+    </button>
+    <div class="product-info">
+      <p class="product-info__name">{{ nameProduct }}</p>
+      <p class="product-info__category">{{ categoriesString }}</p>
+      <div class="product-info__price">
+        <p class="product-info__price--original" v-if="hasDiscounter">
           {{ formattedOriginalPrice }}
         </p>
-        <p class="conteiner-price" :class="{ 'discount-prise': hasDiscounter }">
+        <p  :class="{ 'product-info__price--discount': hasDiscounter }">
           {{ formattedPrice }}
         </p>
       </div>
@@ -100,7 +99,7 @@ const categoriesString = computed(() => {
 .product {
   position: relative;
 }
-.conteiner-1 {
+.product__image {
   height: 325px;
   width: 270px;
   border-radius: 1px;
@@ -109,7 +108,7 @@ const categoriesString = computed(() => {
   background-repeat: no-repeat;
 }
 
-.container-1-info-text {
+.product-info{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -117,31 +116,26 @@ const categoriesString = computed(() => {
   font-family: 'Jost', sans-serif;
   background-color: #eae9e8;
 }
-.conteiner-name {
+.product-info__name{
   font-weight: bold;
   margin-bottom: 5px;
   color: #0f303f;
   font-size: 18px;
 }
 
-.conteiner-categories {
+.product-info__category {
   color: #0f303f;
   margin-bottom: 5px;
   font-size: 16px;
 }
-.discount-prise {
+.product-info__price--discount{
   font-weight: bold;
   color: #e64926 !important;
   font-size: 14px;
   border: 2px #e64926;
 }
-.conteiner-price {
-  font-weight: bold;
-  color: #0f303f;
-  font-size: 14px;
-  border: 2px black;
-}
-.like-btn {
+
+.button__like{
   width: 45px;
   height: 45px;
   background-color: #ffffff;
@@ -158,7 +152,7 @@ const categoriesString = computed(() => {
   padding: 0;
 }
 
-.sale {
+.product__sale {
   width: 45px;
   height: 45px;
   background-color: #e64926;
@@ -170,7 +164,7 @@ const categoriesString = computed(() => {
   align-items: center;
   justify-content: center;
 }
-.interest-p {
+.product__sale--text {
   color: #ffffff;
   font-size: 14px;
 }
@@ -188,13 +182,13 @@ const categoriesString = computed(() => {
 .like-btn:active {
   transform: scale(0.95);
 }
-.price-container {
+.product-info__price {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 5px;
 }
-.original-price {
+.product-info__price--original {
   color: #888;
   font-size: 14px;
   text-decoration: line-through;

@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue'
 const props = defineProps({
   info: {
     type: String,
@@ -27,13 +26,13 @@ const toKebabCase = (str) => {
 }
 </script>
 <template>
-  <li class="li">
+  <li>
     <RouterLink
       :to="{
         name: getRouteName(info),
         params: { categoryName: toKebabCase(info) }
       }"
-      class="category-link"
+      class="category__link"
     >
       {{ info }}
     </RouterLink>
@@ -43,13 +42,7 @@ const toKebabCase = (str) => {
 .svg {
   padding-left: 200px;
 }
-.a1 {
-  color: #0f303f;
-  margin-bottom: 10px;
-  position: absolute;
-  font-size: 16px;
-}
-.category-link {
+.category__link {
   color: #0f303f;
   text-decoration: none;
   display: block;
@@ -57,7 +50,7 @@ const toKebabCase = (str) => {
   transition: color 0.3s;
 }
 
-.category-link:hover {
+.category__link:hover {
   color: rgba(0, 0, 0, 0.466);
 }
 </style>

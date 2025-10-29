@@ -8,7 +8,7 @@ defineProps({
     }
   },
   size: {
-    type: Number,
+    type: String,
     default: 16
   },
   color: {

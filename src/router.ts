@@ -11,7 +11,8 @@ import {
   ManCatalog,
   Sport,
   Texnic,
-  Electronic
+  Electronic,
+  CatalogPage
 } from './views'
 
 const routes = [

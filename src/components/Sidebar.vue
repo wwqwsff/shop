@@ -1,16 +1,25 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue'
 import { BaseButton, SidebarElements } from './index'
 
+type Category = 'women'| 'men'
+interface Item {
+  title: string
+}
 
-const activeCategory = ref('women')
+interface MenuItem {
+  title: string
+  items: Item[]
+}
+
+const activeCategory = ref<Category>('women')
 const categories = {
   women: { text: 'ЖЕНЩИНЫ' },
   men: { text: 'МУЖЧИНЫ' }
 }
 
 
-const allMenuItems = {
+const allMenuItems: Record<Category,MenuItem[]> = {
   women: [
     {
       title: 'ОДЕЖДА',
@@ -42,14 +51,14 @@ const allMenuItems = {
   ]
 }
 
-const activeIndex = ref(null)
+const activeIndex = ref<number|null>(null)
 
-const handleCategoryClick = (category) => {
+const handleCategoryClick = (category:Category) => {
   activeCategory.value = category
   activeIndex.value = null 
 }
 
-const setActiveIndex = (index) => {
+const setActiveIndex = (index: number) => {
   activeIndex.value = activeIndex.value === index ? null : index
 }
 
@@ -61,7 +70,7 @@ const currentMenuItems = computed(() => {
 
 <template>
   <div class="sidebar">
-    <div class="btn">
+    <div class="button">
       <BaseButton
         :text="categories.women.text"
         :is-active="activeCategory == 'women'"
@@ -74,7 +83,7 @@ const currentMenuItems = computed(() => {
       />
     </div>
     <div class="menu">
-      <ul class="nav-list">
+      <ul class="menu__nav-list">
         <SidebarElements
           v-for="(item, index) in currentMenuItems"
           :key="index"
@@ -99,7 +108,7 @@ const currentMenuItems = computed(() => {
   color: #0f303f;
 }
 
-.nav-list {
+.menu__nav-list {
   font-size: 14px;
   position: sticky;
   text-align: left;
@@ -108,7 +117,7 @@ const currentMenuItems = computed(() => {
   gap: 200px;
 }
 
-.btn {
+.button {
   display: flex;
   align-items: row;
   gap: 15px;

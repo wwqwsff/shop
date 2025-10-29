@@ -31,7 +31,7 @@ watch(
 <template>
   <hr class="line" />
   <li>
-    <a class="a1" href="#">{{ info }}</a
+    <a class="text" href="#">{{ info }}</a
     ><Svg
       class="svg"
       :size="16"
@@ -42,14 +42,14 @@ watch(
   </li>
   <SidebarInfo
     v-if="isOpen"
-    class="info"
+    class="text--row"
     v-for="(item, index) in items"
     :key="index"
     :info="item.title"
   />
 </template>
 <style scoped>
-.info {
+.text--row {
   display: flex;
   align-items: row;
   gap: 5px;
@@ -63,7 +63,7 @@ watch(
 .svg {
   padding-left: 200px;
 }
-.a1 {
+.text{
   color: #0f303f;
   margin-bottom: 10px;
   position: absolute;

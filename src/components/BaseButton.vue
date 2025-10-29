@@ -20,8 +20,8 @@ const handleClick = () => {
 </script>
 <template>
   <button
-    class="language"
-    :class="{ 'btn-active': isActive, 'btn-active-orange':isActiveOrange }"
+    class="button"
+    :class="{ 'button--active': isActive, 'button--active--orange':isActiveOrange }"
     
     @click="handleClick"
   >
@@ -29,7 +29,7 @@ const handleClick = () => {
   </button>
 </template>
 <style scoped>
-.language {
+.button{
   background-color: transparent;
   border: none;
   padding: 0;
@@ -44,10 +44,10 @@ const handleClick = () => {
   margin-top: 20px;
   color: #0f303f;
 }
-.btn-active {
+.button--active {
   color: #B7C1C5 !important;
 }
-.btn-active-orange{
+.button--active--orange{
   color: #E64926 !important;
 }
 </style>

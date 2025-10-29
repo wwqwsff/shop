@@ -1,18 +1,30 @@
-<script setup>
+<script setup lang="ts">
 import { computed, ref, onMounted } from 'vue'
 import { CardItem } from './index.js'
 import api from '../api/index.js'
 
-const products = ref([])
-const loading = ref(true)
-const error = ref(null)
-const likeProducts = ref({})
+interface Product{
+  id: number
+  title: string
+  price: number
+  discountPercentage: number;
+  thumbnail: string;
+  category: string;
+}
+const products = ref<Product[]>([])
+const loading = ref<boolean>(true)
+const error = ref<string| null>(null)
+const likeProducts = ref<LikeProducts>({})
 
-const fetchProducts = async () => {
+interface LikeProducts {
+  [key: string | number]: boolean
+}
+
+const fetchProducts = async ():Promise<void> => {
   try {
     loading.value = true
     const response = await api.getProductsByCategory('womens-dresses', 20)
-    products.value = response.products
+    products.value = response.data.products as Product[]
   } catch (err) {
     error.value = 'Не удалось загрузить товары'
     console.error('Ошибка загрузи товаров:', err)
@@ -21,7 +33,7 @@ const fetchProducts = async () => {
   }
 }
 
-const calculateDiscountedPrice = (product) => {
+const calculateDiscountedPrice = (product: Product): number => {
   if (product.discountPercentage > 0) {
     const discount = product.price * (product.discountPercentage / 100)
     return Math.round(product.price - discount)
@@ -29,15 +41,15 @@ const calculateDiscountedPrice = (product) => {
   return product.price
 }
 
-const toggleLike = (productId) => {
+const toggleLike = (productId: string|number):void => {
   likeProducts.value[productId] = !likeProducts.value[productId]
 }
 
-const isProductLiked = (productId) => {
+const isProductLiked = (productId: string| number)=> {
   return !!likeProducts.value[productId]
 }
 
-const productContainers = computed(() => {
+const productContainers = computed<Product[][]>(() => {
   const containers = []
   for (let i = 0; i < products.value.length; i += 3) {
     containers.push(products.value.slice(i, i + 3))
@@ -52,7 +64,7 @@ onMounted(() => {
 
 <template>
   <div class="base">
-    <h1 class="title">ВСЕ ТОВАРЫ</h1>
+    <h1 class="title">ПЛАТЬЯ И ЮБКИ</h1>
     <div class="container">
       <div
         v-for="(productGroup, index) in productContainers"

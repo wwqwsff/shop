@@ -24,13 +24,13 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="title-container" :class="[left]">
+  <div class="text" :class="[left]">
     <p :class="[size, color, style]">{{ text }}</p>
   </div>
 </template>
 
 <style scoped>
-.title-container {
+.text {
   position: fixed;
   top: 20px;
   left: 50%;
