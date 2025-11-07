@@ -73,12 +73,12 @@ const currentMenuItems = computed(() => {
     <div class="button">
       <BaseButton
         :text="categories.women.text"
-        :is-active="activeCategory == 'women'"
+        :is-active="activeCategory === 'women'"
         @click="handleCategoryClick('women')"
       />
       <BaseButton
         :text="categories.men.text"
-        :is-active="activeCategory == 'men'"
+        :is-active="activeCategory === 'men'"
         @click="handleCategoryClick('men')"
       />
     </div>

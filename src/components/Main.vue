@@ -1,30 +1,18 @@
-<script setup lang="ts">
+<script setup>
 import { computed, ref, onMounted } from 'vue'
 import { CardItem } from './index.js'
 import api from '../api/index.js'
 
-interface Product{
-  id: number
-  title: string
-  price: number
-  discountPercentage: number;
-  thumbnail: string;
-  category: string;
-}
-const products = ref<Product[]>([])
-const loading = ref<boolean>(true)
-const error = ref<string| null>(null)
-const likeProducts = ref<LikeProducts>({})
+const products = ref([])
+const loading = ref(true)
+const error = ref(null)
+const likeProducts = ref({})
 
-interface LikeProducts {
-  [key: string | number]: boolean
-}
-
-const fetchProducts = async ():Promise<void> => {
+const fetchProducts = async () => {
   try {
     loading.value = true
     const response = await api.getProductsByCategory('womens-dresses', 20)
-    products.value = response.data.products as Product[]
+    products.value = response.products
   } catch (err) {
     error.value = 'Не удалось загрузить товары'
     console.error('Ошибка загрузи товаров:', err)
@@ -33,7 +21,7 @@ const fetchProducts = async ():Promise<void> => {
   }
 }
 
-const calculateDiscountedPrice = (product: Product): number => {
+const calculateDiscountedPrice = (product) => {
   if (product.discountPercentage > 0) {
     const discount = product.price * (product.discountPercentage / 100)
     return Math.round(product.price - discount)
@@ -41,15 +29,15 @@ const calculateDiscountedPrice = (product: Product): number => {
   return product.price
 }
 
-const toggleLike = (productId: string|number):void => {
+const toggleLike = (productId) => {
   likeProducts.value[productId] = !likeProducts.value[productId]
 }
 
-const isProductLiked = (productId: string| number)=> {
+const isProductLiked = (productId) => {
   return !!likeProducts.value[productId]
 }
 
-const productContainers = computed<Product[][]>(() => {
+const productContainers = computed(() => {
   const containers = []
   for (let i = 0; i < products.value.length; i += 3) {
     containers.push(products.value.slice(i, i + 3))
