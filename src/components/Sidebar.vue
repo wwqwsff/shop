@@ -43,9 +43,9 @@ const allMenuItems: Record<Category,MenuItem[]> = {
     {
       title: 'МУЖЧИНАМ',
       items: [
-        { title: 'Спортивные товары' },
-        { title: 'Бытовая техника' },
-        { title: 'Электроника' }
+        { title: 'Мужские рубашки' },
+        { title: 'Мужские часы' },
+        { title: 'Солнцезащитные очки' }
       ]
     }
   ]

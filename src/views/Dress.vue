@@ -72,6 +72,7 @@ const productContainers = computed(() => {
   font-family: 'Avenir';
   font-size: 25px;
   color: #0f303f;
+  position: sticky;
   white-space: nowrap;
 }
 .conteiner-next {

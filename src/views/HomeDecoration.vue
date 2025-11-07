@@ -11,7 +11,7 @@ const likeProducts = ref({})
 const fetchProducts = async () => {
   try {
     loading.value = true
-    const response = await api.getProductsByCategory("tops", 20)
+    const response = await api.getProductsByCategory("home-decoration", 20)
     products.value = response.products
   } catch (err) {
     error.value = 'Не удалось загрузить товары'
@@ -52,7 +52,7 @@ onMounted(() => {
 
 <template>
   <div class="base">
-    <h1 class="title">ФУТБОЛКИ И ТОПЫ</h1>
+    <h1 class="title">ДЕКОР ДЛЯ ДОМА</h1>
     <div class="container">
       <div
         v-for="(productGroup, index) in productContainers"

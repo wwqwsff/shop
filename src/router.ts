@@ -5,14 +5,13 @@ import {
   Main,
   Tshirt,
   Trousers,
-  Shoes,
-  Sneakers,
-  Bag,
+  Skincare,
+  HomeDecoration,
   ManCatalog,
-  Sport,
-  Texnic,
-  Electronic,
-  CatalogPage
+  Parfum ,
+ SunGlasses,
+ MenWatch ,
+ MenTshirt,
 } from './views'
 
 const routes = [
@@ -31,9 +30,9 @@ const routes = [
     component: Dress
   },
   {
-    path: '/category/shoes',
-    name: 'Shoes',
-    component: Shoes
+    path: '/category/parfum',
+    name: 'Parfum',
+    component: Parfum 
   },
   {
     path: '/category/trousers',
@@ -45,37 +44,40 @@ const routes = [
     name: 'Tshirt',
     component: Tshirt
   },
+ 
   {
-    path: '/category/sneaker',
-    name: 'Sneakers',
-    component: Sneakers
-  },
-  {
-    path: '/category/bag',
-    name: 'Bag',
-    component: Bag
+    path: '/category/homedecoration',
+    name: 'HomeDecoration',
+    component: HomeDecoration
   },
   {
     path: '/menCatalog',
     name: 'ManCatalog',
     component: ManCatalog
   },
+  
   {
-    path: '/category/sport',
-    name: 'Sport',
-    component: Sport
+    path: '/category/mentshirt',
+    name: 'MenTshirt',
+    component: MenTshirt
   },
   {
-    path: '/category/electronic',
-    name: 'Electronic',
-    component: Electronic
+    path: '/category/menwatch',
+    name: 'MenWatch',
+    component: MenWatch 
   },
   {
-    path: '/category/texnic',
-    name: 'Texnic',
-    component: Texnic
+    path: '/category/skincare',
+    name: 'Skincare',
+    component: Skincare 
+  },{
+    path: '/category/sunglasses',
+    name: 'SunGlasses',
+    component:SunGlasses
   }
+
 ]
+
 
 const router = createRouter({
   history: createWebHistory(),
