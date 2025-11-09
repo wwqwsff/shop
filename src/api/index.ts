@@ -1,13 +1,25 @@
+// api/index.js
 import axios from 'axios'
 import { API_BASE_URL, HTTP_STATUS, PRODUCTS_LIMIT } from './constants'
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 15000,
+  timeout: 30000,
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
   }
 })
+
+apiClient.interceptors.request.use(
+  (config) => {
+    console.log(`Making API request to: ${config.url}`)
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
 
 apiClient.interceptors.response.use(
   (response) => {
@@ -17,29 +29,65 @@ apiClient.interceptors.response.use(
     return response
   },
   (error) => {
-    console.error('API Error', error)
+    console.error('API Error Details:', {
+      message: error.message,
+      code: error.code,
+      url: error.config?.url,
+      status: error.response?.status
+    })
+    
+   
+    if (error.code === 'ERR_NETWORK') {
+      console.error('Network error - check internet connection or CORS')
+    }
+    
     return Promise.reject(error)
   }
 )
 
 export default {
-  getProduct(id: string) {
-    return apiClient.get(`/products/${id}`)
+  async getProduct(id: string) {
+    try {
+      return await apiClient.get(`/products/${id}`)
+    } catch (error) {
+      console.error(`Error fetching product ${id}:`, error)
+      throw error
+    }
   },
 
-  getProducts(limit = PRODUCTS_LIMIT, skip = 0) {
-    return apiClient.get(`/products?limit=${limit}&skip=${skip}`)
+  async getProducts(limit = PRODUCTS_LIMIT, skip = 0) {
+    try {
+      return await apiClient.get(`/products?limit=${limit}&skip=${skip}`)
+    } catch (error) {
+      console.error('Error fetching products:', error)
+      throw error
+    }
   },
 
-  getProductsByCategory(category: string, limit = PRODUCTS_LIMIT) {
-    return apiClient.get(`/products/category/${category}?limit=${limit}`)
+  async getProductsByCategory(category: string, limit = PRODUCTS_LIMIT) {
+    try {
+      return await apiClient.get(`/products/category/${category}?limit=${limit}`)
+    } catch (error) {
+      console.error(`Error fetching ${category} products:`, error)
+      throw error
+    }
   },
 
-  searchProducts(query: string, limit = PRODUCTS_LIMIT) {
-    return apiClient.get(`/products/search?q=${query}&limit=${limit}`)
+  async searchProducts(query: string, limit = PRODUCTS_LIMIT) {
+    try {
+      return await apiClient.get(`/products/search?q=${query}&limit=${limit}`)
+    } catch (error) {
+      console.error(`Error searching products for "${query}":`, error)
+      throw error
+    }
   },
 
-  getCategories() {
-    return apiClient.get('/products/categories')
+  async getCategories() {
+    try {
+      return await apiClient.get('/products/categories')
+    } catch (error) {
+      console.error('Error fetching categories:', error)
+      throw error
+    }
   }
 }

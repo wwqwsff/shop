@@ -5,12 +5,13 @@ const props = defineProps({
     required: true
   }
 })
+
 const categoryToRouteMap = {
-  'Платья юбки': 'Main',
+  'Платья юбки': 'Dress',
   'Футболки и топы': 'Tshirt',
   'Брюки и шорты': 'Trousers',
-  Парфюмерия: 'Parfum',
-  Макияж: 'Skincare',
+  'Парфюмерия': 'Parfum',
+  'Макияж': 'Skincare',
   'Все товары': 'HomeDecoration',
   'Мужские рубашки': 'MenTshirt',
   'Мужские часы': 'MenWatch',
@@ -21,17 +22,13 @@ const getRouteName = (category) => {
   return categoryToRouteMap[category] || 'Main'
 }
 
-const toKebabCase = (str) => {
-  return str.toLowerCase().replace(/\s+/g, '-')
-}
+
 </script>
+
 <template>
   <li>
     <RouterLink
-      :to="{
-        name: getRouteName(info),
-        params: { categoryName: toKebabCase(info) }
-      }"
+      :to="{ name: getRouteName(info) }"
       class="category__link"
     >
       {{ info }}

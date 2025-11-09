@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref, onMounted } from 'vue'
-import { CardItem } from '../components/index.js'
-import api from '../api/index.js'
+import { CardItem } from '../components/index.ts'
+import api from '../api/index.ts'
 
 const products = ref([])
 const loading = ref(true)

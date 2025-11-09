@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import CardItem from '../components/CardItem.vue'
-import { products, containers } from '../mock-api/product.js'
+import { products, containers } from '../mock-api/product.ts'
 
 const likeProducts = ref({})
 
