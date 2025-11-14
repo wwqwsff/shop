@@ -6,7 +6,7 @@ import Sidebar from './components/Sidebar.vue'
 
 <template>
   <Loyout class="layout"> </Loyout>
-  <Sidebar class="sidebar"></Sidebar>
+  
 
   <div class="app">
     <RouterView class="content"></RouterView>
@@ -15,9 +15,10 @@ import Sidebar from './components/Sidebar.vue'
 
 <style scoped>
 .app {
-  margin-left: 200px;
+  
   justify-content: center;
-  margin-top: -495px;
-  padding-left: 130px;
+  
+ 
 }
+
 </style>

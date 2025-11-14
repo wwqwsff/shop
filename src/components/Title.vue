@@ -30,26 +30,23 @@ const props = defineProps({
 </template>
 
 <style scoped>
-.text {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  width: auto;
-  max-width: 90%;
-  text-align: center;
-}
 
 .size25 {
   font-size: 25px;
 }
-
+.size40 {
+  font-size: 45px;
+}
 .dark-blue {
   color: #0f303f;
 }
-
+.orang {
+  color:#E64926 ;
+}
 .style1 {
   font-family: 'Avenir';
+}
+.style2{
+  font-family: 'Cormorant Garamond';
 }
 </style>

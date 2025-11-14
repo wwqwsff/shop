@@ -11,7 +11,16 @@ const props = defineProps({
   isActiveOrange:{
     type: Boolean,
     default:false
+  },
+  size: {
+    type: String,
+    default: 16
+  },
+  color:{
+    type:String,
+    default: ''
   }
+
 })
 const emit = defineEmits(['click'])
 const handleClick = () => {
@@ -21,7 +30,7 @@ const handleClick = () => {
 <template>
   <button
     class="button"
-    :class="{ 'button--active': isActive, 'button--active--orange':isActiveOrange }"
+    :class="[{ 'button--active': isActive, 'button--active--orange':isActiveOrange,}, size, color,]"
     
     @click="handleClick"
   >
@@ -49,5 +58,19 @@ const handleClick = () => {
 }
 .button--active--orange{
   color: #E64926 !important;
+}
+.small-size{
+  font-size: 14px !important;
+}
+.grey{
+  color: #B7C1C5 !important;
+}
+.orang {
+  color:#E64926 !important;
+}
+.normall-size{
+  font-size: 25px !important;
+  font-family: 'Cormorant Garamond';
+
 }
 </style>

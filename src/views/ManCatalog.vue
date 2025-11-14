@@ -1,7 +1,8 @@
 <script setup>
 import { computed, ref } from 'vue'
-import CardItem from '../components/CardItem.vue'
+import { CardItem , Sidebar} from './index.ts'
 import { products, containers } from '../mock-api/product.ts'
+
 
 const likeProducts = ref({})
 
@@ -38,6 +39,8 @@ const productContainers = computed(() => {
 <template>
   <div class="base">
     <h1 class="title">МУЖЧИНАМ</h1>
+    <div class="base__content">
+    <Sidebar class="sidebar"></Sidebar>
     <div class="container">
       <div
         v-for="(productGroup, index) in productContainers"
@@ -60,6 +63,8 @@ const productContainers = computed(() => {
       </div>
     </div>
   </div>
+  </div>
+
 </template>
 
 <style scoped>
@@ -68,12 +73,23 @@ const productContainers = computed(() => {
   padding: 0;
   box-sizing: border-box;
 }
+.base__content{
+   display: flex;
+  flex-direction: row;
+  gap: 170px;
+  width: 100%;
+  height: 100%;
+}
+.sidebar{
+  position: sticky;
+}
 .title {
   font-family: 'Avenir';
   font-size: 25px;
-  color: #0f303f;
-  white-space: nowrap;
   position: sticky;
+  white-space: nowrap;
+  color: #0f303f;
+  padding-left:440px ;
 }
 .conteiner-next {
   height: 325px;

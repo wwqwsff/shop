@@ -130,7 +130,7 @@ const currentMenuItems = computed(() => {
   width: 220px;
   height: 462px;
   background-color: #eae9e8;
-
+  
   margin-left: 50px;
 }
 </style>

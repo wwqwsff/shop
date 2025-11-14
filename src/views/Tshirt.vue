@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref, onMounted } from 'vue'
-import { CardItem } from './index.ts'
+import { CardItem , Sidebar} from './index.ts'
 import api from '../api/index.ts'
 
 const products = ref([])
@@ -53,6 +53,8 @@ onMounted(() => {
 <template>
   <div class="base">
     <h1 class="title">ФУТБОЛКИ И ТОПЫ</h1>
+    <div class="base__content">
+    <Sidebar class="sidebar"></Sidebar>
     <div class="container">
       <div
         v-for="(productGroup, index) in productContainers"
@@ -75,6 +77,7 @@ onMounted(() => {
       </div>
     </div>
   </div>
+  </div>
 </template>
 <style scoped>
 * {
@@ -82,10 +85,23 @@ onMounted(() => {
   padding: 0;
   box-sizing: border-box;
 }
+.base__content{
+   display: flex;
+  flex-direction: row;
+  gap: 170px;
+  width: 100%;
+  height: 100%;
+}
+.sidebar{
+  position: sticky;
+}
 .title {
   font-family: 'Avenir';
   font-size: 25px;
+  position: sticky;
+  white-space: nowrap;
   color: #0f303f;
+  padding-left:440px ;
 }
 .conteiner-next {
   height: 325px;

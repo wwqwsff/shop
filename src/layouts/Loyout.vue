@@ -15,6 +15,7 @@ import Header from '../components/Header.vue'
 <style>
 .header {
   margin-bottom: 70px;
+ 
 }
 body {
   padding: 0;
@@ -23,6 +24,7 @@ body {
   background-color: #eae9e8;
   position: relative;
 }
+
 </style>
 <style scoped>
 .loyout {
@@ -30,4 +32,5 @@ body {
   flex-direction: column;
   text-align: center;
 }
+
 </style>

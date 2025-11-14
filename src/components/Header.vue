@@ -31,21 +31,27 @@ const handleLanguageClick = (language: Language) => {
 </script>
 
 <template>
+  
   <div class="header">
     <div class="name">
       <p class="name__text">A L L E G R I A</p>
     </div>
     <div class="button">
+      <RouterLink to="/category/dress" class="btn--router">
       <BaseButton
         :text="categories.women.text"
         :is-active="activeCategory === 'women'"
         @click="handleCategoryClick('women')"
+        
       />
+      </RouterLink>
+      <RouterLink to="/category/mentshirt"  class="btn--router">
       <BaseButton
         :text="categories.men.text"
         :is-active="activeCategory === 'men'"
         @click="handleCategoryClick('men')"
       />
+      </RouterLink>
 
       <div class="serch">
         <p class="serch__text">ПОИСК</p>
@@ -71,19 +77,45 @@ const handleLanguageClick = (language: Language) => {
       </div>
     </div>
   </div>
+  <div class="header__down">
+    <RouterLink to="/" class="btn--router">
+    <BaseButton
+    class="header__down--info" 
+    text="Главная"
+    size="small-size"/></RouterLink>
+    <BaseButton
+    class="header__down--info" 
+    text="Женщины"
+    size="small-size"/>
+    <BaseButton
+    class="header__down--info" 
+    text="Одежда"
+    size="small-size"/>
+    <BaseButton
+    class="header__down--info-grey" 
+    text="Кофты"
+    size="small-size"
+    color="grey"
+    />
+  </div>
+  
 </template>
 
 <style scoped>
+
 .header {
   width: 100%;
   height: 43px;
   display: flex;
   align-items: row;
   gap: 400px;
-  margin-top: 5%;
-  padding: 0;
-
-  display: fixed;
+  margin-top: 1%;
+  justify-content: center;
+  
+ 
+}
+.btn--router{
+  text-decoration: none;
 }
 .name {
   height: 100%;
@@ -132,7 +164,37 @@ const handleLanguageClick = (language: Language) => {
   margin-top: 23px;
   display: flex;
   flex-direction: row;
-  gap: 15px;
+  gap: 3px;
   margin-left: 50px;
+}
+.header__down{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: -70px;
+  margin-bottom: 50px;
+  margin-left: 50px;
+}
+.header__down--info::after{
+  
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  background-color:#0f303f ;
+  border-radius: 50%;
+  
+  margin: 5px;
+  
+}
+.header__down--info-grey::after{
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  background-color: #B7C1C5;
+  border-radius: 50%;
+  
+  margin: 5px;
 }
 </style>
