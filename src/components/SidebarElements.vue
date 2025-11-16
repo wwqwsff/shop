@@ -2,6 +2,7 @@
 import { computed, ref, watch } from 'vue'
 import Svg from './Svg.vue'
 import SidebarInfo from './SidebarInfo.vue'
+
 const props = defineProps({
   info: {
     type: String,
@@ -14,7 +15,12 @@ const props = defineProps({
   items: {
     type: Array,
     default: () => []
+  },
+  routerKey:{
+    type: String,
+    required: true
   }
+  
 })
 const emit = defineEmits(['toggle'])
 const hangleClick = () => {
@@ -46,6 +52,7 @@ watch(
     v-for="(item, index) in items"
     :key="index"
     :info="item.title"
+    :route-key="item.routeKey"
   />
 </template>
 <style scoped>

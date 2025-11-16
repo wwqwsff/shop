@@ -5,6 +5,7 @@ import { BaseButton, SidebarElements } from './index'
 type Category = 'women'| 'men'
 interface Item {
   title: string
+  routeKey: string
 }
 
 interface MenuItem {
@@ -19,38 +20,43 @@ const categories = {
 }
 
 
-const allMenuItems: Record<Category,MenuItem[]> = {
+const allMenuItems: Record<Category, MenuItem[]> = {
   women: [
     {
       title: 'ОДЕЖДА',
       items: [
-        { title: 'Платья юбки' },
-        { title: 'Футболки и топы' },
-        { title: 'Брюки и шорты' }
+        { title: 'Платья юбки', routeKey: 'dresses_skirts' },
+        { title: 'Футболки и топы', routeKey: 'tshirts_tops' },
+        { title: 'Брюки и шорты', routeKey: 'pants_shorts' }
       ]
     },
     {
       title: 'КОСМЕТИКА',
-      items: [{ title: 'Парфюмерия' }, { title: 'Макияж' }]
+      items: [
+        { title: 'Парфюмерия', routeKey: 'perfume' },
+        { title: 'Макияж', routeKey: 'makeup' }
+      ]
     },
-    { title: 'ДЕКОР ДЛЯ ДОМА', items: [{ title: 'Все товары' }] },
+    {
+      title: 'ДЕКОР ДЛЯ ДОМА',
+      items: [{ title: 'Все товары', routeKey: 'all_products' }]
+    },
     {
       title: 'УКРАШЕНИЯ',
-      items: [{ title: 'Украшения' }]
+      items: [{ title: 'Украшения', routeKey: 'jewelry' }]
     }
   ],
   men: [
     {
       title: 'МУЖЧИНАМ',
       items: [
-        { title: 'Мужские рубашки' },
-        { title: 'Мужские часы' },
-        { title: 'Солнцезащитные очки' }
+        { title: 'Мужские рубашки', routeKey: 'men_shirts' },
+        { title: 'Мужские часы', routeKey: 'men_watches' },
+        { title: 'Солнцезащитные очки', routeKey: 'sunglasses' }
       ]
     }
   ]
 }
-
 const activeIndex = ref<number|null>(null)
 
 const handleCategoryClick = (category:Category) => {

@@ -3,21 +3,24 @@ const props = defineProps({
   info: {
     type: String,
     required: true
+  },
+  routeKey: {  
+    type: String,
+    required: true
   }
 })
 
 const categoryToRouteMap = {
-  'Платья юбки': 'Dress',
-  'Футболки и топы': 'Tshirt',
-  'Брюки и шорты': 'Trousers',
-  'Парфюмерия': 'Parfum',
-  'Макияж': 'Skincare',
-  'Все товары': 'HomeDecoration',
-  'Мужские рубашки': 'MenTshirt',
-  'Мужские часы': 'MenWatch',
-  'Солнцезащитные очки': 'SunGlasses'
+  dresses_skirts: 'Dress',
+  tshirts_tops: 'Tshirt',
+  pants_shorts: 'Trousers',
+  perfume: 'Parfum',
+  makeup: 'Skincare',
+  all_products: 'HomeDecoration',
+  men_shirts: 'MenTshirt',
+  men_watches: 'MenWatch',
+  sunglasses: 'SunGlasses'
 }
-
 const getRouteName = (category) => {
   return categoryToRouteMap[category] || 'Main'
 }
@@ -28,7 +31,7 @@ const getRouteName = (category) => {
 <template>
   <li>
     <RouterLink
-      :to="{ name: getRouteName(info) }"
+      :to="{ name: getRouteName(routeKey) }"
       class="category__link"
     >
       {{ info }}
