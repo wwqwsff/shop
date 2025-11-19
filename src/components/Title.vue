@@ -37,8 +37,14 @@ const props = defineProps({
 .size40 {
   font-size: 45px;
 }
+.size14 {
+  font-size: 14px;
+}
 .dark-blue {
   color: #0f303f;
+}
+.white{
+  color: #EAE9E8;
 }
 .orang {
   color:#E64926 ;

@@ -1,24 +1,14 @@
 <script setup>
 import { computed, ref, onMounted } from 'vue'
-import { CardItem , Sidebar} from './index.ts'
+import { CardItem , Sidebar, DataLoader} from './index.ts'
 import api from '../api/index.ts'
 
 const products = ref([])
-const loading = ref(true)
-const error = ref(null)
 const likeProducts = ref({})
 
 const fetchProducts = async () => {
-  try {
-    loading.value = true
     const response = await api.getProductsByCategory("mens-watches", 20)
     products.value = response.products
-  } catch (err) {
-    error.value = 'Не удалось загрузить товары'
-    console.error('Ошибка загрузи товаров:', err)
-  } finally {
-    loading.value = false
-  }
 }
 
 const calculateDiscountedPrice = (product) => {
@@ -55,27 +45,29 @@ onMounted(() => {
     <h1 class="title">МУЖСКИЕ ЧАСЫ</h1>
     <div class="base__content">
     <Sidebar class="sidebar"></Sidebar>
-    <div class="container">
-      <div
-        v-for="(productGroup, index) in productContainers"
-        :key="index"
-        class="conteiner-next"
-      >
-        <CardItem
-          v-for="product in productGroup"
-          :key="product.id"
-          :image="product.thumbnail"
-          :nameProduct="product.title"
-          :price="calculateDiscountedPrice(product)"
-          :originalPrice="product.price"
-          :categories="product.category"
-          :interest="product.discountPercentage"
-          :productId="product.id"
-          :isLiked="isProductLiked(product.id)"
-          @toggle-like="toggleLike"
-        />
+    <DataLoader :loadFn="fetchProducts">
+      <div class="container">
+        <div
+          v-for="(productGroup, index) in productContainers"
+          :key="index"
+          class="conteiner-next"
+        >
+          <CardItem
+            v-for="product in productGroup"
+            :key="product.id"
+            :image="product.thumbnail"
+            :nameProduct="product.title"
+            :price="calculateDiscountedPrice(product)"
+            :originalPrice="product.price"
+            :categories="product.category"
+            :interest="product.discountPercentage"
+            :productId="product.id"
+            :isLiked="isProductLiked(product.id)"
+            @toggle-like="toggleLike"
+          />
+        </div>
       </div>
-    </div>
+    </DataLoader>
   </div>
   </div>
 </template>
