@@ -30,9 +30,17 @@ const props = defineProps({
 </template>
 
 <style scoped>
-
+.text{
+  margin:0px;
+}
 .size25 {
   font-size: 25px;
+}
+.size20 {
+  font-size: 20px;
+}
+.size18 {
+  font-size: 18px;
 }
 .size40 {
   font-size: 45px;
@@ -40,8 +48,14 @@ const props = defineProps({
 .size14 {
   font-size: 14px;
 }
+.size16 {
+  font-size: 16px;
+}
 .dark-blue {
   color: #0f303f;
+}
+.grey{
+  color:#B7C1C5;
 }
 .white{
   color: #EAE9E8;

@@ -4,7 +4,7 @@ import { API_BASE_URL, HTTP_STATUS, PRODUCTS_LIMIT } from './constants'
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 30000,
+  timeout: 60000,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
@@ -28,22 +28,30 @@ apiClient.interceptors.response.use(
     }
     return response
   },
-  (error) => {
+  async (error) => {
+    const originalRequest = error.config;
+
+
+    if (error.code === 'ECONNABORTED' && error.message.includes('timeout') && !originalRequest._retry) {
+      originalRequest._retry = true;
+      console.log(`Retrying request to ${originalRequest.url} due to timeout`);
+      return apiClient(originalRequest);
+    }
+
     console.error('API Error Details:', {
       message: error.message,
       code: error.code,
       url: error.config?.url,
       status: error.response?.status
-    })
+    });
     
-   
     if (error.code === 'ERR_NETWORK') {
-      console.error('Network error - check internet connection or CORS')
+      console.error('Network error - check internet connection or CORS');
     }
     
-    return Promise.reject(error)
+    return Promise.reject(error);
   }
-)
+);
 
 export default {
   async getProduct(id: string) {

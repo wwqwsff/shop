@@ -32,7 +32,7 @@ defineExpose({ fetchData, loading, error })
 </script>
 
 <template>
-  <div v-if="loading">Loading...</div>
-  <div v-else-if="error">{{ error }}</div>
-  <slot v-else />
+  <!-- <div v-if="loading">Loading...</div>
+  <div v-else-if="error">{{ error }}</div> -->
+  <slot />
 </template>

@@ -49,11 +49,11 @@ const hasDiscounter = computed(() => {
 })
 
 const formattedPrice = computed(() => {
-  return `${props.price * 10} руб`
+  return `${props.price} руб`
 })
 
 const formattedOriginalPrice = computed(() => {
-  return `${props.originalPrice * 10} руб`
+  return `${props.originalPrice} руб`
 })
 
 const categoriesString = computed(() => {
@@ -66,10 +66,12 @@ const categoriesString = computed(() => {
 
 <template>
   <div class="product">
+    <RouterLink to="/category/product">
     <div
       class="product__image"
       :style="{ backgroundImage: image ? `url(${image})` : 'none' }"
-    ></div>
+    ></div></RouterLink>
+  
     <div v-if="hasDiscounter" class="product__sale">
       <p class="product__sale--text">{{ Math.round(interest) }}%</p>
     </div>
@@ -94,6 +96,7 @@ const categoriesString = computed(() => {
       </div>
     </div>
   </div>
+  
 </template>
 <style scoped>
 .product {

@@ -12,7 +12,11 @@ import {
  SunGlasses,
  MenWatch ,
  MenTshirt,
+ ProductCard,
+ PopUpWindow,
+Basket
 } from './views'
+import path from 'path'
 
 const routes = [
   {
@@ -25,6 +29,10 @@ const routes = [
     component: HomePage
   },
   {
+    path: '/basket',
+    component: Basket
+  },
+  {
     path: '/category/dress',
     name: 'Dress',
     component: Dress
@@ -33,6 +41,11 @@ const routes = [
     path: '/category/parfum',
     name: 'Parfum',
     component: Parfum 
+  },
+  {
+    path:'/category/pop',
+    name:'PopUpWindow',
+    component: PopUpWindow
   },
   {
     path: '/category/trousers',
@@ -74,6 +87,11 @@ const routes = [
     path: '/category/sunglasses',
     name: 'SunGlasses',
     component:SunGlasses
+  },
+  {
+    path:'/category/product',
+    name: 'ProductCard',
+    component: ProductCard
   }
 
 ]
