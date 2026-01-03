@@ -66,11 +66,12 @@ const categoriesString = computed(() => {
 
 <template>
   <div class="product">
-    <RouterLink to="/category/product">
-    <div
-      class="product__image"
-      :style="{ backgroundImage: image ? `url(${image})` : 'none' }"
-    ></div></RouterLink>
+    <RouterLink :to="`/product/${productId}`">
+      <div
+        class="product__image"
+        :style="{ backgroundImage: image ? `url(${image})` : 'none' }"
+      ></div>
+    </RouterLink>
   
     <div v-if="hasDiscounter" class="product__sale">
       <p class="product__sale--text">{{ Math.round(interest) }}%</p>

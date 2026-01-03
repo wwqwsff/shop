@@ -1,99 +1,201 @@
 <script setup>
-import { Title, DataLoader,BaseButton,PopUpWindow} from './index.ts'
-import { computed, ref, onMounted } from 'vue';
-import { paymentContent,returnContent } from '../mock-api/product.ts'
+import { Title, DataLoader, BaseButton, PopUpWindow } from './index.ts'
+import { computed, ref } from 'vue'
+import { paymentContent, returnContent } from '../mock-api/product.ts'
 import api from '../api/index.ts'
-const fetchProducts = async () => {
-  console.log('fetchProducts')
-  const response = await api.getProductsByCategory('mens-shirts', 20)
-  products.value = response.products[0]
-}
-const product = ref({})
-onMounted(()=>{
-    fetchProducts()
+import { useBasketStore } from '../store/basket.ts'
+
+const props = defineProps({
+  productId: {
+    type: [String, Number],
+    required: true
+  }
 })
-const sizeProducts = {
-    xs:{title: 'XS'},
-    s:{title:'S'},
-    m:{title: 'M'},
-    l:{title:'L'}
 
-}
-const colorProducts = {
-    beige:{title:'beige'},
-    oranges:{title:'oranges'},
-    blue:{title:'blue'},
-    black:{title:'black'},
-}
+const { addToBasket } = useBasketStore()
 
+const product = ref({})
 const showPaymentPopup = ref(false)
 const showReturnPopup = ref(false)
+const selectedSize = ref('')
+const selectedColor = ref('')
 
-
-</script>
-<template>
-    <DataLoader>
-    <div class="product__card">
-        <div class="product__card--image">
-            <img :src="product.thumbnail" :alt="product.title" />
-        </div>
-        <div class="product__card--info">
-            <Title class='product__card--info--style' text ='American vintage' size="size25" color='dark-blue'/>
-            <Title class="product__card--info--style--one" text ='Classic dress' size="size14" color='grey'/>
-            <Title class='product__card--info--style--one' text ='12000 руб' size="size14" color='dark-blue'/>
-            <Title  class='product__card--info--style--two' text ='Размер' size="size14" color='dark-blue'/>
-            <div class="product__card--btn--case">
-                <BaseButton v-for='(sizeProduct,key) in sizeProducts'
-                :key = 'key'
-                :text="sizeProduct.title"
-                class="product__card--btn"/>
-            </div>
-            <BaseButton  class='product__card--info--style--btn' text="Таблица размеров"/>
-            <Title  class='product__card--info--style--one' text ='Цвет' size="size14" color='dark-blue'/>
-            <div class="product__card--btn--case">
-                <BaseButton v-for='(colorProduct,key) in colorProducts'
-                :key="key"
-                :color="colorProduct.title"
-                size="button--rectangle"
-                />
-            </div>
-            <div class="addToCard">
-                <BaseButton size="button--addCard" text="ДОБАВИТЬ В КОРЗИНУ"/>
-                <BaseButton size="button--addCard" text="КУПИТЬ В ОДИН КЛИК" color="grey" color-background="dark-blue"/>
-            </div>
-            <div class="information">
-                <BaseButton 
-                @click="showPaymentPopup = true"
-                text="Оплата и доставка" 
-                color="grey" 
-                
-            />
-            <BaseButton 
-                @click="showReturnPopup = true"
-                text="Возврат и доставка" 
-                color="grey" 
-                
-            />
-            </div>
-        </div>
-    </div>
-      <PopUpWindow 
-      v-if="showPaymentPopup"
-      title="Оплата и доставка"
-      :text="paymentContent"
-      size="pay"
-      @close="showPaymentPopup = false"
-    />
+const fetchProduct = async () => {
+  console.log(`Fetching product with ID: ${props.productId}`)
+  try {
+    const response = await api.getProduct(props.productId.toString())
+    console.log('Product data:', response)
+    product.value = response
+    return response
+  } catch (error) {
+    console.error('Error fetching product from API:', error)
     
-    <!-- Всплывающее окно возврата -->
-    <PopUpWindow 
-      v-if="showReturnPopup"
-      title="Возврат и доставка"
-      :text="returnContent"
-      size="return"
-      @close="showReturnPopup = false"
-    />
-    </DataLoader>
+    const fallbackProduct = {
+      id: props.productId,
+      title: 'Пример товара',
+      brand: 'Пример бренда',
+      price: 2999,
+      description: 'Описание товара',
+      thumbnail: 'https://via.placeholder.com/427x520',
+      rating: 4.5,
+      discountPercentage: 15,
+      category: 'clothing'
+    }
+    
+    product.value = fallbackProduct
+    return fallbackProduct
+  }
+}
+
+const sizeProducts = {
+  xs: { title: 'XS' },
+  s: { title: 'S' },
+  m: { title: 'M' },
+  l: { title: 'L' }
+}
+
+const colorProducts = {
+  beige: { title: 'beige' },
+  oranges: { title: 'oranges' },
+  blue: { title: 'blue' },
+  black: { title: 'black' }
+}
+
+const productTitle = computed(() => product.value?.title || '')
+const productPrice = computed(() => product.value?.price ? `${product.value.price} руб` : '')
+const productImage = computed(() => product.value?.thumbnail || '')
+
+// Функция добавления в корзину
+const handleAddToBasket = () => {
+  if (!selectedSize.value) {
+    alert('Пожалуйста, выберите размер')
+    return
+  }
+  
+  addToBasket(product.value, selectedSize.value, selectedColor.value)
+  alert('Товар добавлен в корзину!')
+}
+
+// Функция покупки в один клик
+const handleBuyNow = () => {
+  if (!selectedSize.value) {
+    alert('Пожалуйста, выберите размер')
+    return
+  }
+  
+  addToBasket(product.value, selectedSize.value, selectedColor.value)
+  // Здесь можно добавить редирект на страницу оформления заказа
+  alert('Товар добавлен в корзину! Переход к оформлению...')
+}
+</script>
+
+<template>
+  <DataLoader :loadFn="fetchProduct">
+    <div class="product__card" v-if="product">
+      <div class="product__card--image">
+        <img :src="productImage" :alt="productTitle" />
+      </div>
+      <div class="product__card--info">
+        <Title class="product__card--info--style" 
+               :text="product.brand || 'Brand'" 
+               size="size25" 
+               color="dark-blue" />
+        <Title class="product__card--info--style--one" 
+               :text="productTitle" 
+               size="size14" 
+               color="grey" />
+        <Title class="product__card--info--style--one" 
+               :text="productPrice" 
+               size="size14" 
+               color="dark-blue" />
+        
+        <Title v-if="product.discountPercentage" 
+               class="product__card--info--style--one" 
+               :text="`Скидка: ${product.discountPercentage}%`" 
+               size="size14" 
+               color="red" />
+        
+        <Title v-if="product.rating" 
+               class="product__card--info--style--one" 
+               :text="`Рейтинг: ${product.rating}`" 
+               size="size14" 
+               color="dark-blue" />
+        
+        <div v-if="product.description" 
+             class="product__card--info--style--one">
+          <Title text="Описание:" size="size14" color="dark-blue" />
+          <p>{{ product.description }}</p>
+        </div>
+        
+        <Title class="product__card--info--style--two" 
+               text="Размер" 
+               size="size14" 
+               color="dark-blue" />
+        <div class="product__card--btn--case">
+          <BaseButton 
+            v-for="(sizeProduct, key) in sizeProducts"
+            :key="key"
+            :text="sizeProduct.title"
+            :class="['product__card--btn', { 'selected': selectedSize === key }]"
+            @click="selectedSize = key"
+          />
+        </div>
+        <BaseButton class="product__card--info--style--btn" 
+                    text="Таблица размеров" />
+        
+        <Title class="product__card--info--style--one" 
+               text="Цвет" 
+               size="size14" 
+               color="dark-blue" />
+        <div class="product__card--btn--case">
+          <BaseButton 
+            v-for="(colorProduct, key) in colorProducts"
+            :key="key"
+            :color="colorProduct.title"
+            size="button--rectangle"
+            :class="{ 'selected': selectedColor === key }"
+            @click="selectedColor = key"
+          />
+        </div>
+        
+        <div class="addToCard">
+          <BaseButton 
+            size="button--addCard" 
+            text="ДОБАВИТЬ В КОРЗИНУ"
+            @click="handleAddToBasket"
+          />
+          <BaseButton 
+            size="button--addCard" 
+            text="КУПИТЬ В ОДИН КЛИК" 
+            color="grey" 
+            color-background="dark-blue"
+            @click="handleBuyNow"
+          />
+        </div>
+        
+        <div class="information">
+          <BaseButton @click="showPaymentPopup = true"
+                      text="Оплата и доставка" 
+                      color="grey" />
+          <BaseButton @click="showReturnPopup = true"
+                      text="Возврат и доставка" 
+                      color="grey" />
+        </div>
+      </div>
+    </div>
+    
+    <PopUpWindow v-if="showPaymentPopup"
+                 title="Оплата и доставка"
+                 :text="paymentContent"
+                 size="pay"
+                 @close="showPaymentPopup = false" />
+    
+    <PopUpWindow v-if="showReturnPopup"
+                 title="Возврат и доставка"
+                 :text="returnContent"
+                 size="return"
+                 @close="showReturnPopup = false" />
+  </DataLoader>
 </template>
 
 <style scoped>

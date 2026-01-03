@@ -14,7 +14,8 @@ import {
  MenTshirt,
  ProductCard,
  PopUpWindow,
-Basket
+Basket,
+Product
 } from './views'
 import path from 'path'
 
@@ -31,6 +32,11 @@ const routes = [
   {
     path: '/basket',
     component: Basket
+  },
+  {
+  path: '/product/:id',
+  name: 'Product',
+  component: Product
   },
   {
     path: '/category/dress',

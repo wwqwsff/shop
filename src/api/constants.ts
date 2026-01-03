@@ -1,5 +1,5 @@
-export const API_BASE_URL =
-  import.meta.env.VITE_API_URL || 'https://dummyjson.com'
+// src\api\constants.ts
+export const API_BASE_URL = 'https://dummyjson.com'
 
 export const HTTP_STATUS = {
   SUCCESS: 200,

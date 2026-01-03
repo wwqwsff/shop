@@ -1,5 +1,9 @@
 <script setup>
-import { Title, Input, BaseButton, BasketProduct } from './index.ts';
+import { Title, Input, BaseButton, BasketProduct } from './index.ts'
+import { useBasketStore } from '../store/basket.ts'
+import { computed } from 'vue'
+
+const { basketItems, totalPrice, removeFromBasket, updateQuantity } = useBasketStore()
 
 const inputTexts = {
     name: { title: 'Введите имя' },
@@ -7,6 +11,10 @@ const inputTexts = {
     email: { title: 'Введите email' },
     number: { title: 'Введите номер телефона' }
 }
+
+const total = computed(() => {
+  return `${totalPrice.value} руб`
+})
 </script>
 
 <template>
@@ -71,12 +79,17 @@ const inputTexts = {
         <div class="vertical-divider"></div>
         
         <div class="right-section">
-            <BasketProduct/>
-            <BasketProduct/>
-            <Title text="Всего:" color="dark-blue" size="size20"></Title>
+            <BasketProduct 
+                v-for="item in basketItems"
+                :key="`${item.id}-${item.size}-${item.color}`"
+                :product="item"
+                @remove="removeFromBasket(item.id)"
+                @update-quantity="(qty) => updateQuantity(item.id, qty)"
+            />
+            <Title :text="`Всего: ${total}`" color="dark-blue" size="size20"></Title>
         </div>
     </div>
-  <hr class="hr--one">
+    <hr class="hr--one">
 </template>
 
 <style scoped>

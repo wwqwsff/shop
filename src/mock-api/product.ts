@@ -142,3 +142,40 @@ export const returnContent = `Возврат и обмен
 Вы можете осуществить возврат товара непосредственно в наших розничных магазинах, расположенных в Киеве, Харькове, Днепре и Одессе.
 
 Для жителей других городов Украины пересылка товара перевозчиком Новой Почтой или любым другим, на склад интернет-магазина ALLEGRIA, расположенного в городе Харькове, осуществляется за счет компании.`;
+
+export const mockProducts = [
+  {
+    id: 1,
+    title: 'Elegant Evening Dress',
+    description: 'Beautiful evening dress for special occasions',
+    price: 12000,
+    discountPercentage: 15,
+    rating: 4.8,
+    stock: 25,
+    brand: 'American Vintage',
+    category: 'womens-dresses',
+    thumbnail: 'https://via.placeholder.com/400x600/CCCCCC/333333?text=Dress+1',
+    images: [
+      'https://via.placeholder.com/400x600/CCCCCC/333333?text=Dress+1-1',
+      'https://via.placeholder.com/400x600/CCCCCC/333333?text=Dress+1-2',
+      'https://via.placeholder.com/400x600/CCCCCC/333333?text=Dress+1-3'
+    ]
+  },
+  {
+    id: 2,
+    title: 'Summer Floral Dress',
+    description: 'Light floral dress perfect for summer',
+    price: 8900,
+    discountPercentage: 10,
+    rating: 4.5,
+    stock: 42,
+    brand: 'Summer Style',
+    category: 'womens-dresses',
+    thumbnail: 'https://via.placeholder.com/400x600/CCCCCC/333333?text=Dress+2',
+    images: [
+      'https://via.placeholder.com/400x600/CCCCCC/333333?text=Dress+2-1',
+      'https://via.placeholder.com/400x600/CCCCCC/333333?text=Dress+2-2'
+    ]
+  }
+  // Добавьте больше товаров по аналогии
+]
