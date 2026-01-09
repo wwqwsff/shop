@@ -18,9 +18,9 @@ const categories = {
   men: { text: 'МУЖЧИНЫ' }
 }
 const icons = {
-  1: { name: 'bag', size: '16', color: '#0F303F' },
-  2: { name: 'person', size: '16', color: '#0F303F' },
-  3: { name: 'heart', size: '16', color: '#0F303F' }
+  1: { name: 'bag', size: '16', color: '#0F303F',link:'/basket' },
+  2: { name: 'person', size: '16', color: '#0F303F',link:'/profile'  },
+  3: { name: 'heart', size: '16', color: '#0F303F',link:'/profile'   }
 }
 const handleCategoryClick = (category: Category) => {
   activeCategory.value = category
@@ -67,13 +67,16 @@ const handleLanguageClick = (language: Language) => {
         
       />
       <div class="icon">
-        <Svg
-          v-for="(icon, key) in icons"
-          :key="key"
-          :name="icon.name"
-          :color="icon.color"
-          :size="icon.size"
-        ></Svg>
+        <RouterLink v-for='icon in icons' 
+        :key='icon.name'
+        :to="icon.link"
+         class="btn--router">
+          <Svg
+            :name="icon.name"
+            :color="icon.color"
+            :size="icon.size"
+          ></Svg>
+        </RouterLink>
       </div>
     </div>
   </div>

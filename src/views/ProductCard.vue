@@ -35,11 +35,6 @@ const fetchProduct = async () => {
       title: 'Пример товара',
       brand: 'Пример бренда',
       price: 2999,
-      description: 'Описание товара',
-      thumbnail: 'https://via.placeholder.com/427x520',
-      rating: 4.5,
-      discountPercentage: 15,
-      category: 'clothing'
     }
     
     product.value = fallbackProduct
@@ -64,28 +59,17 @@ const colorProducts = {
 const productTitle = computed(() => product.value?.title || '')
 const productPrice = computed(() => product.value?.price ? `${product.value.price} руб` : '')
 const productImage = computed(() => product.value?.thumbnail || '')
+const isSelectionComplete = computed(() => selectedSize.value && selectedColor.value)
 
-// Функция добавления в корзину
 const handleAddToBasket = () => {
-  if (!selectedSize.value) {
-    alert('Пожалуйста, выберите размер')
-    return
-  }
-  
+  if (!isSelectionComplete.value) return
   addToBasket(product.value, selectedSize.value, selectedColor.value)
-  alert('Товар добавлен в корзину!')
 }
 
-// Функция покупки в один клик
 const handleBuyNow = () => {
-  if (!selectedSize.value) {
-    alert('Пожалуйста, выберите размер')
-    return
-  }
-  
+  if (!isSelectionComplete.value) return
   addToBasket(product.value, selectedSize.value, selectedColor.value)
-  // Здесь можно добавить редирект на страницу оформления заказа
-  alert('Товар добавлен в корзину! Переход к оформлению...')
+  // Здесь можно добавить логику перехода к оформлению заказа
 }
 </script>
 
@@ -162,6 +146,7 @@ const handleBuyNow = () => {
           <BaseButton 
             size="button--addCard" 
             text="ДОБАВИТЬ В КОРЗИНУ"
+            :disabled="!isSelectionComplete"
             @click="handleAddToBasket"
           />
           <BaseButton 
@@ -169,6 +154,7 @@ const handleBuyNow = () => {
             text="КУПИТЬ В ОДИН КЛИК" 
             color="grey" 
             color-background="dark-blue"
+            :disabled="!isSelectionComplete"
             @click="handleBuyNow"
           />
         </div>
@@ -254,7 +240,6 @@ body.popup-open .product__card {
 .product__card--image{
     width: 427px;
     height: 520px;
-    background-color:rgba(183, 176, 176, 0.715);
     display:flex;
 }
 .product__card--info{

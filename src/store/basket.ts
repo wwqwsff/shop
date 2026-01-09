@@ -21,10 +21,8 @@ export function useBasketStore() {
     )
 
     if (existingItemIndex !== -1) {
-      // Увеличиваем количество, если товар уже в корзине
       basketItems.value[existingItemIndex].quantity += 1
     } else {
-      // Добавляем новый товар
       basketItems.value.push({
         id: product.id,
         title: product.title,
@@ -37,7 +35,6 @@ export function useBasketStore() {
       })
     }
     
-    // Сохраняем в localStorage
     localStorage.setItem('basket', JSON.stringify(basketItems.value))
   }
 
@@ -67,7 +64,7 @@ export function useBasketStore() {
     return basketItems.value.reduce((total, item) => total + item.quantity, 0)
   })
 
-  // Восстанавливаем корзину из localStorage при инициализации
+  
   const loadFromStorage = () => {
     const stored = localStorage.getItem('basket')
     if (stored) {
@@ -75,7 +72,7 @@ export function useBasketStore() {
     }
   }
 
-  // Вызываем сразу
+  
   loadFromStorage()
 
   return {

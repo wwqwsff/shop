@@ -1,5 +1,5 @@
 <script setup>
-import { Title, BaseButton } from './index.ts'
+import { Title, BaseButton, Svg } from './index.ts'
 
 const props = defineProps({
   product: {
@@ -51,23 +51,29 @@ const removeItem = () => {
               <BaseButton @click="increaseQuantity" text="+" size="small" />
             </div>
         </div>
-        <div class="actions">
-          <BaseButton @click="removeItem" 
-                      text="Удалить" 
-                      color="red" 
-                      size="small" />
+           <div class="actions">
+            <Svg name="cross" class="svg-dell" size="16" @click="removeItem"></Svg>
         </div>
+        
     </div>
     <hr class="hr--one">
 </template>
 
 <style scoped>
+.remove-button{
+   border: none;
+   
+}
+.svg-dell{
+  margin-top: -100px;
+}
 .container{
     display: flex;
     align-items: center;
     margin-bottom: 40px;
     gap: 20px;
 }
+
 .image{
     height: 170px;
     width: 140px;
@@ -105,7 +111,10 @@ const removeItem = () => {
     font-weight: bold;
 }
 .actions {
+     margin-left: auto; 
     align-self: flex-start;
+    padding: 8px;
+    margin-top: -10px; 
 }
 .hr--one {
     background-color: rgba(128, 128, 128, 0.3);
