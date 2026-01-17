@@ -27,21 +27,49 @@ const props = defineProps({
   colorBackground:{
     type:String,
     default: ''
+  },
+    placeholder: { 
+    type: String,
+    default: ''
+  },
+    modelValue: { 
+    type: [String, Number],
+    default: ''
+  },
+  type: {
+    type: String,
+    default: 'text'
+  },
+  hasError: {
+    type: Boolean,
+    default: false
   }
 
 })
-const emit = defineEmits(['click'])
-const handleClick = () => {
-  emit('click')
+
+const emit = defineEmits(['update:modelValue'])
+
+const updateValue = (event) => {
+  emit('update:modelValue', event.target.value)
 }
 </script>
 <template>
- <div class="serch">
+  <div class="serch" :class="{ 'error': hasError }">
         <p class="serch__text">{{ text1 }}</p>
-        <input type="text" class="serch__input" :placeholder=text />
+        <input 
+          :type="type" 
+          class="serch__input" 
+          :placeholder="placeholder" 
+          :value="modelValue"
+          @input="updateValue"
+        />
       </div>
 </template>
 <style scoped>
+.serch__input:hover{
+  border-bottom: 1.5px solid #0f303f;
+  
+}
 .serch {
   display: flex;
   flex-direction: row;
@@ -75,5 +103,7 @@ font-family: 'Avenir';
     color: #0f303f;
   
 }
-
+.error .serch__input {
+  border-bottom-color: #ff4444;
+}
 </style>

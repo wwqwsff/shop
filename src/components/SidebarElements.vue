@@ -37,7 +37,7 @@ watch(
 <template>
   <hr class="line" />
   <li>
-    <a class="text" href="#">{{ info }}</a
+    <span class="text">{{ info }}</span>
     ><Svg
       class="svg"
       :size="16"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed , onMounted,watch } from 'vue'
 import { BaseButton, SidebarElements } from './index'
 
 type Category = 'women'| 'men'
@@ -7,17 +7,25 @@ interface Item {
   title: string
   routeKey: string
 }
-
-interface MenuItem {
-  title: string
-  items: Item[]
-}
-
-const activeCategory = ref<Category>('women')
 const categories = {
   women: { text: 'ЖЕНЩИНЫ' },
   men: { text: 'МУЖЧИНЫ' }
 }
+interface MenuItem {
+  title: string
+  items: Item[]
+}
+const getInitialCategory = (): Category=>{
+  const saved = localStorage.getItem('activeCategory') as Category
+  return saved || 'women'
+}
+const activeCategory = ref<Category>(getInitialCategory())
+
+
+watch(activeCategory, (newValue) => {
+  localStorage.setItem('activeCategory', newValue)
+})
+
 
 
 const allMenuItems: Record<Category, MenuItem[]> = {

@@ -1,7 +1,7 @@
 <script setup>
 import { Title, DataLoader, BaseButton, PopUpWindow } from './index.ts'
 import { computed, ref } from 'vue'
-import { paymentContent, returnContent } from '../mock-api/product.ts'
+import { paymentContent, returnContent} from '../mock-api/product.ts'
 import api from '../api/index.ts'
 import { useBasketStore } from '../store/basket.ts'
 

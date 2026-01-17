@@ -1,20 +1,125 @@
 <script setup>
-import { Title, Input, BaseButton, BasketProduct } from './index.ts'
+import { Title, Input, BaseButton, BasketProduct, PopUpWindow } from './index.ts'
 import { useBasketStore } from '../store/basket.ts'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+import {discountContent} from '../mock-api/product.ts'
+
 
 const { basketItems, totalPrice, removeFromBasket, updateQuantity } = useBasketStore()
+const errorMessage = ref('')
+const showPaymentDiscount = ref(false)
+const infoInputText = ref({
+    name: '',
+    surname: '',
+    email: '',
+    number: ''
+})
 
-const inputTexts = {
-    name: { title: 'Введите имя' },
-    sname: { title: 'Введите фамилию' },
-    email: { title: 'Введите email' },
-    number: { title: 'Введите номер телефона' }
-}
+const error = ref({
+    name: false,
+    surname: false,
+    email: false,
+    number: false
+})
 
 const total = computed(() => {
-  return `${totalPrice.value} руб`
+    return `${totalPrice.value} руб`
 })
+
+
+const formFields = [
+    { 
+        key: 'name',
+        title: 'Введите имя',
+        modelKey: 'name'
+    },
+    { 
+        key: 'surname',
+        title: 'Введите фамилию',
+        modelKey: 'surname'
+    },
+    { 
+        key: 'email',
+        title: 'Введите email',
+        modelKey: 'email'
+    },
+    { 
+        key: 'number',
+        title: 'Введите номер телефона',
+        modelKey: 'number'
+    }
+]
+
+
+const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return re.test(email)
+}
+
+const validatePhone = (phone) => {
+    
+    const digits = phone.replace(/\D/g, '')
+    return digits.length >= 10
+}
+
+const toOrderProduct = () => {
+    
+    error.value = {
+        name: false,
+        surname: false,
+        email: false,
+        number: false
+    }
+    errorMessage.value = ''
+    
+    let hasError = false
+    
+    
+    if (!infoInputText.value.name.trim()) {
+        error.value.name = true
+        hasError = true
+    }
+    
+    if (!infoInputText.value.surname.trim()) {
+        error.value.surname = true
+        hasError = true
+    }
+    
+    if (!infoInputText.value.email.trim()) {
+        error.value.email = true
+        hasError = true
+    } else if (!validateEmail(infoInputText.value.email)) {
+        error.value.email = true
+        hasError = true
+        errorMessage.value = 'Введите корректный email'
+    }
+    
+    if (!infoInputText.value.number.trim()) {
+        error.value.number = true
+        hasError = true
+    } else if (!validatePhone(infoInputText.value.number)) {
+        error.value.number = true
+        hasError = true
+        if (!errorMessage.value) {
+            errorMessage.value = 'Введите корректный номер телефона'
+        }
+    }
+    
+    
+    if (basketItems.length === 0) {
+        errorMessage.value = 'Корзина пуста'
+        return
+    }
+    
+    if (hasError && !errorMessage.value) {
+        errorMessage.value = 'Заполните обязательные поля'
+        return
+    }
+    
+    
+    console.log('Отправляем заказ:', infoInputText.value)
+    
+}
 </script>
 
 <template>
@@ -23,11 +128,19 @@ const total = computed(() => {
     <div class="container">
         <div class="left-section">
             <div class="container-input">
-                <Input 
-                    v-for="(inputText, key) in inputTexts"
-                    :key="key"
-                    :text="inputText.title" 
-                />
+                    <Input 
+                        v-for="field in formFields"
+                        :key="field.key"
+                        :placeholder="field.title"  
+                        v-model="infoInputText[field.modelKey]"
+                        :hasError="error[field.modelKey]"
+                        :type="field.modelKey === 'email' ? 'email' : field.modelKey === 'number' ? 'tel' : 'text'"
+                        />
+                
+                 <div v-if="errorMessage" class="error-message">
+                    {{ errorMessage }}
+                </div>
+                
                 <Title 
                     class="basket__delivery" 
                     text="ДОСТАВКА" 
@@ -44,7 +157,11 @@ const total = computed(() => {
                 />
                 <div class="btn--next">
                     <BaseButton class="btn1" text="Редактировать" color="orang"/>
-                    <BaseButton class="btn2" text="Получить скидку" color="orang"/>
+                    <BaseButton 
+                    @click="showPaymentDiscount =true"
+                    class="btn2" 
+                    text="Получить скидку" 
+                    color="orang"/>
                 </div>
                 <div class="container-pay">
                     <Title 
@@ -71,6 +188,7 @@ const total = computed(() => {
                         colorBackground="greylight" 
                         class="basket__deliver" 
                         text="ЗАКАЗАТЬ"
+                        @click="toOrderProduct"
                     />
                 </div>
             </div>
@@ -90,9 +208,23 @@ const total = computed(() => {
         </div>
     </div>
     <hr class="hr--one">
+    <PopUpWindow v-if="showPaymentDiscount"
+    :text="discountContent"
+    size="pay"
+    @close="showPaymentDiscount=false"></PopUpWindow>
 </template>
 
 <style scoped>
+
+.error-message {
+    color: #ff4444;
+    font-size: 14px;
+    margin: 10px 15px;
+    padding: 8px;
+    background-color: rgba(255, 68, 68, 0.1);
+    border-radius: 4px;
+    border-left: 3px solid #ff4444;
+}
 .container {
     display: flex;
     width: 100%;
