@@ -17,9 +17,8 @@ const { addToBasket } = useBasketStore()
 const product = ref({})
 const showPaymentPopup = ref(false)
 const showReturnPopup = ref(false)
-const selectedSize = ref('')
-const selectedColor = ref('')
-
+const selectedSize = ref('s') 
+const selectedColor = ref('beige')
 const fetchProduct = async () => {
   console.log(`Fetching product with ID: ${props.productId}`)
   try {
@@ -41,7 +40,6 @@ const fetchProduct = async () => {
     return fallbackProduct
   }
 }
-
 const sizeProducts = {
   xs: { title: 'XS' },
   s: { title: 'S' },
@@ -71,6 +69,7 @@ const handleBuyNow = () => {
   addToBasket(product.value, selectedSize.value, selectedColor.value)
   // Здесь можно добавить логику перехода к оформлению заказа
 }
+
 </script>
 
 <template>
@@ -122,6 +121,9 @@ const handleBuyNow = () => {
             :text="sizeProduct.title"
             :class="['product__card--btn', { 'selected': selectedSize === key }]"
             @click="selectedSize = key"
+            :is-active-border="selectedSize===key"
+            
+    
           />
         </div>
         <BaseButton class="product__card--info--style--btn" 
@@ -139,6 +141,7 @@ const handleBuyNow = () => {
             size="button--rectangle"
             :class="{ 'selected': selectedColor === key }"
             @click="selectedColor = key"
+            :is-active-border="selectedColor === key"
           />
         </div>
         
@@ -148,6 +151,7 @@ const handleBuyNow = () => {
             text="ДОБАВИТЬ В КОРЗИНУ"
             :disabled="!isSelectionComplete"
             @click="handleAddToBasket"
+            class="addToCard--hover"
           />
           <BaseButton 
             size="button--addCard" 
@@ -156,16 +160,19 @@ const handleBuyNow = () => {
             color-background="dark-blue"
             :disabled="!isSelectionComplete"
             @click="handleBuyNow"
+            class="addToPay--hover"
           />
         </div>
         
         <div class="information">
           <BaseButton @click="showPaymentPopup = true"
                       text="Оплата и доставка" 
-                      color="grey" />
+                      color="grey"
+                      class="information--style" />
           <BaseButton @click="showReturnPopup = true"
                       text="Возврат и доставка" 
-                      color="grey" />
+                      color="grey"
+                      class="information--style" />
         </div>
       </div>
     </div>
@@ -185,7 +192,17 @@ const handleBuyNow = () => {
 </template>
 
 <style scoped>
-
+.addToPay--hover:hover{
+  background-color:  #0a202b!important;
+  border: 2px solid #747474 !important;
+}
+.addToCard--hover:hover{
+  background-color: #e0dede;
+  border: 2px solid #747474;
+}
+.information--style:hover{
+  color: #999898 !important;
+}
 body.popup-open .product__card {
   filter: blur(2px);
 }
@@ -213,6 +230,10 @@ body.popup-open .product__card {
     width: 35px;
     height: 35px;
     border: 1px solid #0f303f;
+}
+.product__card--btn:hover{
+  border: 3px solid #bebebe !important;
+  background-color:#e0dede;
 }
 
 .product__card--info--style--one{

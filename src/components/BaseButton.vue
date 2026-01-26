@@ -23,7 +23,11 @@ const props = defineProps({
   colorBackground:{
     type:String,
     default: ''
-  }
+  },
+  isActiveBorder:{
+    type: Boolean,
+    default:false
+  },
 
 })
 const emit = defineEmits(['click'])
@@ -34,7 +38,7 @@ const handleClick = () => {
 <template>
   <button
     class="button"
-    :class="[{ 'button--active': isActive, 'button--active--orange':isActiveOrange,}, size, color,colorBackground]"
+    :class="[{ 'button--active': isActive, 'button--active--orange':isActiveOrange,'btn--active-border':isActiveBorder}, size, color,colorBackground]"
     
     @click="handleClick"
   >
@@ -57,6 +61,10 @@ const handleClick = () => {
   margin-top: 20px;
   color: #0f303f;
 }
+.btn--active-border{
+  border: 3px solid #636363 !important;
+  
+}
 .button--addCard{
   width:280px ;
   height: 50px;
@@ -68,6 +76,9 @@ const handleClick = () => {
   height: 20px;
   border-radius: 26px;
   border: 1px solid #EAE9E8;
+}
+.button--rectangle:hover{
+  border: 3px solid #EAE9E8;
 }
 .button--active {
   color: #B7C1C5 !important;
@@ -81,6 +92,7 @@ const handleClick = () => {
 .grey{
   color: #B7C1C5 !important;
 }
+
 .withe{
   color: aliceblue !important;
   text-align: center !important;
