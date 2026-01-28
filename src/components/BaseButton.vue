@@ -89,6 +89,16 @@ const handleClick = () => {
 .small-size{
   font-size: 14px !important;
 }
+.normal-size{
+  font-size: 16px !important;
+}
+.normal-size:hover{
+  color: #555555 !important;
+}
+.small-size:hover{
+  color: #9da5a8 !important;
+}
+
 .grey{
   color: #B7C1C5 !important;
 }
@@ -112,6 +122,9 @@ const handleClick = () => {
 .orang {
   color:#E64926 !important;
 }
+.orang:hover{
+  color: #831800 !important;
+}
 .black {
   background-color: #000000!important;
 }
@@ -129,4 +142,12 @@ const handleClick = () => {
   text-align: center;
   
 }
+.dilivery:hover{
+  width: 250px;
+  height: 50px;
+  text-align: center;
+  background-color: #364d58;
+  
+}
+
 </style>

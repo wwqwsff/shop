@@ -17,7 +17,7 @@ import {
 Basket,
 Product
 } from './views'
-import path from 'path'
+
 
 const routes = [
   {

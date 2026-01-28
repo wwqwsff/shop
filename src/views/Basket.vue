@@ -306,6 +306,7 @@ const toOrderProduct = () => {
     margin: 0 !important;
 }
 
+
 .container-pay {
     display: flex;
     flex-direction: column;

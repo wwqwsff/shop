@@ -42,6 +42,7 @@ const handleLanguageClick = (language: Language) => {
         :text="categories.women.text"
         :is-active="activeCategory === 'women'"
         @click="handleCategoryClick('women')"
+        size="normal-size"
         
       />
       </RouterLink>
@@ -50,6 +51,7 @@ const handleLanguageClick = (language: Language) => {
         :text="categories.men.text"
         :is-active="activeCategory === 'men'"
         @click="handleCategoryClick('men')"
+        size="normal-size"
       />
       </RouterLink>
 
@@ -64,6 +66,7 @@ const handleLanguageClick = (language: Language) => {
         :text="language.text"
         :is-active-orange="activeLanguage === key"
         @click="handleLanguageClick(key)"
+        size="normal-size"
         
       />
       <div class="icon">
@@ -98,7 +101,7 @@ const handleLanguageClick = (language: Language) => {
     class="header__down--info-grey" 
     text="Кофты"
     size="small-size"
-    color="grey"
+    
     />
   </div>
   

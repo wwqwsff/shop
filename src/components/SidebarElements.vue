@@ -68,7 +68,7 @@ watch(
   margin-bottom: 10px;
 }
 .svg {
-  padding-left: 200px;
+  margin-left: 200px;
 }
 .text{
   color: #0f303f;

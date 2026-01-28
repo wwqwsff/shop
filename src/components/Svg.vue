@@ -36,26 +36,140 @@ const icons = {
 </script>
 
 <template>
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    :width="size"
-    :height="size"
-    :color="color"
-    :stroke-width="strokeWidth"
-    :class="`bi bi-${name}`"
-    viewBox="0 0 16 16"
-  >
-    <path
-      :d="icons[name]"
-      :fill="color"
-      :stroke="stroke"
+  <div class="icon-wrapper">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      :width="size"
+      :height="size"
+      :color="color"
       :stroke-width="strokeWidth"
-    />
-  </svg>
+      :class="`bi bi-${name}`"
+      viewBox="0 0 16 16"
+    >
+      <path
+        :d="icons[name]"
+        :fill="color"
+        :stroke="stroke"
+        :stroke-width="strokeWidth"
+      />
+    </svg>
+  </div>
 </template>
 
 <style scoped>
+.icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  padding: 4px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.icon-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: currentColor;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+.icon-wrapper:hover::before {
+  opacity: 0.1;
+}
+
 svg {
   display: inline-block;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 1;
+  position: relative;
+}
+
+
+.icon-wrapper:hover svg {
+  transform: scale(1.15);
+  filter: brightness(1.2);
+}
+
+
+.bi-plus:hover,
+.bib-dash:hover,
+.bib-cross:hover {
+  animation: pulse 0.6s ease-in-out;
+}
+
+
+.bi-heart:hover,
+.bi-heartFill:hover {
+  transform: scale(1.2);
+  color: #ff4757;
+}
+
+.bi-heartFill {
+  transition: color 0.3s ease;
+}
+
+.bi-heartFill:hover {
+  filter: drop-shadow(0 0 4px rgba(255, 71, 87, 0.4));
+}
+
+
+.bi-bag:hover {
+  color: #2ed573;
+  transform: translateY(-2px);
+}
+
+.bi-person:hover {
+  color: #3742fa;
+  transform: rotate(5deg);
+}
+
+
+.bi-message:hover {
+  color: #1e90ff;
+  animation: bounce 0.5s ease;
+}
+
+
+.bi-cross:hover {
+  color: #ff6b81;
+  transform: rotate(90deg);
+}
+
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1.15);
+  }
+}
+
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.icon-wrapper:active svg {
+  transform: scale(0.9);
+  transition: transform 0.1s ease;
 }
 </style>

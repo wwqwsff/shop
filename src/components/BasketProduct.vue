@@ -46,9 +46,9 @@ const removeItem = () => {
             <Title :text="`${product.price} руб`" size="size16" color="dark-blue"/>
             
             <div class="quantity-control">
-              <BaseButton @click="decreaseQuantity" text="-" size="small" />
+              <BaseButton class="quantity-control-btn" @click="decreaseQuantity" text="-" size="small" />
               <span class="quantity">{{ product.quantity }}</span>
-              <BaseButton @click="increaseQuantity" text="+" size="small" />
+              <BaseButton class="quantity-control-btn" @click="increaseQuantity" text="+" size="small" />
             </div>
         </div>
            <div class="actions">
@@ -60,6 +60,23 @@ const removeItem = () => {
 </template>
 
 <style scoped>
+.quantity-control-btn {
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.quantity-control-btn:hover {
+  transform: translateY(-1px);
+}
+
+.quantity-control-btn:active {
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.08),
+    inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  transform: translateY(1px);
+}
+
 .remove-button{
    border: none;
    

@@ -66,9 +66,8 @@ const updateValue = (event) => {
       </div>
 </template>
 <style scoped>
-.serch__input:hover{
-  border-bottom: 1.5px solid #0f303f;
-  
+.serch__text:hover{
+  color: #686868;
 }
 .serch {
   display: flex;

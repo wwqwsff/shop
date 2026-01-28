@@ -57,6 +57,9 @@ const props = defineProps({
 .grey{
   color:#B7C1C5;
 }
+.grey:hover{
+  color:#868e91;
+}
 .white{
   color: #EAE9E8;
 }
