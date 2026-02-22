@@ -1,7 +1,0 @@
-export { default as CardItem } from './CardItem.vue'
-export { default as Main } from './Main.vue'
-export { default as Header } from './Header.vue'
-export { default as ButtonMenWomen } from './ButtonMenWomen.vue'
-export { default as ButtonLanguage } from './ButtonLanguage.vue'
-export { default as Svg } from './Svg.vue'
-export { default as Title } from './Title.vue'
