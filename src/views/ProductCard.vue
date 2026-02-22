@@ -110,7 +110,6 @@ const handleAddToBasket = () => {
 const handleBuyNow = () => {
   if (!isSelectionComplete.value) return
   addToBasket(product.value, selectedSize.value, selectedColor.value)
-  // Здесь можно добавить логику перехода к оформлению заказа
 }
 const actionButtons = [
   {

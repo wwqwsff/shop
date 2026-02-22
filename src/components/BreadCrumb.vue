@@ -29,7 +29,6 @@ const breadcrumbItems = computed(() => {
     url: r.path
   }));
 
-  // Последний элемент — текущая страница, без ссылки
   if (items.length) items[items.length - 1].url = undefined;
 
   return items;
