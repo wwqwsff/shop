@@ -36,13 +36,13 @@ watch(
 </script>
 <template>
   <hr class="line" />
-  <li>
+  <li @click="hangleClick">
     <span class="text">{{ info }}</span>
-    ><Svg
+    <Svg
       class="svg"
       :size="16"
       :name="isOpen ? 'dash' : 'plus'"
-      @click="hangleClick"
+      
       :stroke-width="0.4"
     ></Svg>
   </li>

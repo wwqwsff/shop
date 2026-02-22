@@ -23,7 +23,10 @@ const routes = [
   {
     path: '/',
     name: 'Main',
-    component: Main
+    component: Main,
+    meta: { breadcrumb: 'Главная',
+      parent: '/'
+     }
   },
   {
     path: '/one',
@@ -41,12 +44,16 @@ const routes = [
   {
     path: '/category/dress',
     name: 'Dress',
-    component: Dress
+    component: Dress,
+    meta: { breadcrumb: 'Платья',
+      parent: '/' }
   },
   {
     path: '/category/parfum',
     name: 'Parfum',
-    component: Parfum 
+    component: Parfum,
+    meta: { breadcrumb: 'Парфюм',
+      parent: '/' }
   },
   {
     path:'/category/pop',
@@ -56,43 +63,59 @@ const routes = [
   {
     path: '/category/trousers',
     name: 'Trousers',
-    component: Trousers
+    component: Trousers,
+    meta: { breadcrumb: 'Брюки',
+      parent: '/' }
   },
   {
     path: '/category/tshirt',
     name: 'Tshirt',
-    component: Tshirt
+    component: Tshirt,
+    meta: { breadcrumb: 'Футболки',
+      parent: '/' }
   },
  
   {
     path: '/category/homedecoration',
     name: 'HomeDecoration',
-    component: HomeDecoration
+    component: HomeDecoration,
+    meta: { breadcrumb: 'Декорации',
+      parent: '/' }
   },
   {
     path: '/menCatalog',
     name: 'ManCatalog',
-    component: ManCatalog
+    component: ManCatalog,
+    meta: { breadcrumb: 'Мужчинам',
+      parent: '/' }
   },
   
   {
     path: '/category/mentshirt',
     name: 'MenTshirt',
-    component: MenTshirt
+    component: MenTshirt,
+    meta: { breadcrumb: 'Мужские футболки',
+      parent: '/' }
   },
   {
     path: '/category/menwatch',
     name: 'MenWatch',
-    component: MenWatch 
+    component: MenWatch,
+    meta: { breadcrumb: 'Часы',
+      parent: '/' }
   },
   {
     path: '/category/skincare',
     name: 'Skincare',
-    component: Skincare 
+    component: Skincare,
+    meta: { breadcrumb: 'Макияж' ,
+      parent: '/'}
   },{
     path: '/category/sunglasses',
     name: 'SunGlasses',
-    component:SunGlasses
+    component:SunGlasses,
+    meta: { breadcrumb: 'Солнечные очки',
+      parent: '/' }
   },
   {
     path:'/category/product',

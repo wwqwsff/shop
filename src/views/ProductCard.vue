@@ -13,10 +13,53 @@ const props = defineProps({
 })
 
 const { addToBasket } = useBasketStore()
+const activePopup = ref(null)
 
+const infoButtons = [
+  { text: 'Оплата и доставка', type: 'payment', content: paymentContent, size: 'pay' },
+  { text: 'Возврат и доставка', type: 'return', content: returnContent, size: 'return' }
+]
+const productInfo = computed(() => [
+  {
+    text: product.value.brand || 'Brand',
+    size: 'size25',
+    color: 'dark-blue',
+    class: 'product__card--info--style'
+  },
+  {
+    text: productTitle.value,
+    size: 'size14',
+    color: 'grey',
+    class: 'product__card--info--style--one'
+  },
+  {
+    text: productPrice.value,
+    size: 'size14',
+    color: 'dark-blue',
+    class: 'product__card--info--style--one'
+  },
+  product.value.discountPercentage && {
+    text: `Скидка: ${product.value.discountPercentage}%`,
+    size: 'size14',
+    color: 'red',
+    class: 'product__card--info--style--one'
+  },
+  product.value.rating && {
+    text: `Рейтинг: ${product.value.rating}`,
+    size: 'size14',
+    color: 'dark-blue',
+    class: 'product__card--info--style--one'
+  }
+].filter(Boolean))
+
+const openPopup = (type) => {
+  activePopup.value = type
+}
+
+const closePopup = () => {
+  activePopup.value = null
+}
 const product = ref({})
-const showPaymentPopup = ref(false)
-const showReturnPopup = ref(false)
 const selectedSize = ref('s') 
 const selectedColor = ref('beige')
 const fetchProduct = async () => {
@@ -69,7 +112,21 @@ const handleBuyNow = () => {
   addToBasket(product.value, selectedSize.value, selectedColor.value)
   // Здесь можно добавить логику перехода к оформлению заказа
 }
-
+const actionButtons = [
+  {
+    text: 'ДОБАВИТЬ В КОРЗИНУ',
+    handler: handleAddToBasket,
+    class: 'addToCard--hover'
+  },
+  {
+    text: 'КУПИТЬ В ОДИН КЛИК',
+    handler: handleBuyNow,
+    class: 'addToPay--hover',
+    color: 'grey',
+    colorBackground: 'dark-blue'
+  }
+]
+const sizeGuideUrl = 'https://sezon16.ru/wp-content/uploads/2025/08/9pdFIE8oX8zZRKtgJkAItGmIn__bOLHQxrbs72tXKP2ekvP27rYGx9jTBOHqCvFDkYQsYnONvPAGbkUoT7automs-1-1200x422.jpg'
 </script>
 
 <template>
@@ -79,31 +136,15 @@ const handleBuyNow = () => {
         <img :src="productImage" :alt="productTitle" />
       </div>
       <div class="product__card--info">
-        <Title class="product__card--info--style" 
-               :text="product.brand || 'Brand'" 
-               size="size25" 
-               color="dark-blue" />
-        <Title class="product__card--info--style--one" 
-               :text="productTitle" 
-               size="size14" 
-               color="grey" />
-        <Title class="product__card--info--style--one" 
-               :text="productPrice" 
-               size="size14" 
-               color="dark-blue" />
-        
-        <Title v-if="product.discountPercentage" 
-               class="product__card--info--style--one" 
-               :text="`Скидка: ${product.discountPercentage}%`" 
-               size="size14" 
-               color="red" />
-        
-        <Title v-if="product.rating" 
-               class="product__card--info--style--one" 
-               :text="`Рейтинг: ${product.rating}`" 
-               size="size14" 
-               color="dark-blue" />
-        
+        <Title
+            v-for="(item, index) in productInfo"
+            :key="index"
+            :text="item.text"
+            :size="item.size"
+            :color="item.color"
+            :class="item.class"
+          />
+                  
         <div v-if="product.description" 
              class="product__card--info--style--one">
           <Title text="Описание:" size="size14" color="dark-blue" />
@@ -126,9 +167,17 @@ const handleBuyNow = () => {
     
           />
         </div>
-        <BaseButton class="product__card--info--style--btn" 
-                    text="Таблица размеров" />
-        
+    
+                <a 
+        :href="sizeGuideUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <BaseButton 
+          class="product__card--info--style--btn" 
+          text="Таблица размеров" 
+        />
+</a>
         <Title class="product__card--info--style--one" 
                text="Цвет" 
                size="size14" 
@@ -146,62 +195,53 @@ const handleBuyNow = () => {
         </div>
         
         <div class="addToCard">
-          <BaseButton 
-            size="button--addCard" 
-            text="ДОБАВИТЬ В КОРЗИНУ"
-            :disabled="!isSelectionComplete"
-            @click="handleAddToBasket"
-            class="addToCard--hover"
-          />
-          <BaseButton 
-            size="button--addCard" 
-            text="КУПИТЬ В ОДИН КЛИК" 
-            color="grey" 
-            color-background="dark-blue"
-            :disabled="!isSelectionComplete"
-            @click="handleBuyNow"
-            class="addToPay--hover"
-          />
-        </div>
+  <BaseButton
+    v-for="button in actionButtons"
+    :key="button.text"
+    size="button--addCard"
+    :text="button.text"
+    :color="button.color"
+    :color-background="button.colorBackground"
+    :disabled="!isSelectionComplete"
+    :class="button.class"
+    @click="button.handler"
+  />
+</div>
         
         <div class="information">
-          <BaseButton @click="showPaymentPopup = true"
-                      text="Оплата и доставка" 
-                      color="grey"
-                      class="information--style" />
-          <BaseButton @click="showReturnPopup = true"
-                      text="Возврат и доставка" 
-                      color="grey"
-                      class="information--style" />
-        </div>
+  <BaseButton
+    v-for="button in infoButtons"
+    :key="button.type"
+    :text="button.text"
+    color="grey"
+    class="information--style"
+    @click="openPopup(button.type)"
+  />
+</div>
       </div>
     </div>
     
-    <PopUpWindow v-if="showPaymentPopup"
-                 title="Оплата и доставка"
-                 :text="paymentContent"
-                 size="pay"
-                 @close="showPaymentPopup = false" />
-    
-    <PopUpWindow v-if="showReturnPopup"
-                 title="Возврат и доставка"
-                 :text="returnContent"
-                 size="return"
-                 @close="showReturnPopup = false" />
+    <PopUpWindow
+  v-if="activePopup"
+  :title="infoButtons.find(btn => btn.type === activePopup)?.text"
+  :text="infoButtons.find(btn => btn.type === activePopup)?.content"
+  :size="infoButtons.find(btn => btn.type === activePopup)?.size"
+  @close="closePopup"
+/>
   </DataLoader>
 </template>
 
 <style scoped>
-.addToPay--hover:hover{
-  background-color:  #0a202b!important;
-  border: 2px solid #747474 !important;
+.product__card .addToPay--hover:hover {
+  background-color: #0a202b;
+  border: 2px solid #747474;
 }
 .addToCard--hover:hover{
   background-color: #e0dede;
   border: 2px solid #747474;
 }
-.information--style:hover{
-  color: #999898 !important;
+.product__card.information--style:hover{
+  color: #999898;
 }
 body.popup-open .product__card {
   filter: blur(2px);
@@ -231,8 +271,8 @@ body.popup-open .product__card {
     height: 35px;
     border: 1px solid #0f303f;
 }
-.product__card--btn:hover{
-  border: 3px solid #bebebe !important;
+.product__card.product__card--btn:hover{
+  border: 3px solid #bebebe ;
   background-color:#e0dede;
 }
 

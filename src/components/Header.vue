@@ -1,11 +1,25 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { BaseButton, Svg } from './index'
+import { ref , computed} from 'vue'
+import { useRoute } from 'vue-router';
+import { BaseButton, Svg, BreadCrumb} from './index'
+
 
 type Category = 'women' | 'men'
 type Language = 'ru'| 'en'
 
- 
+const route = useRoute();
+
+const breadcrumbItems = computed(() => {
+  // matched – массив обработанных частей маршрута (от родительского к дочернему)
+  const items = route.matched.map((matchedRoute, index, array) => {
+    // Берём название из meta, либо генерируем из name
+    const label = matchedRoute.meta?.breadcrumb || matchedRoute.name || '...';
+    // Для всех элементов, кроме последнего, делаем ссылку
+    const url = index === array.length - 1 ? undefined : matchedRoute.path;
+    return { label, url };
+  });
+  return items;
+});
 const activeCategory = ref<Category>('women')
 const activeLanguage = ref<Language>('ru')
 const languages = {
@@ -84,25 +98,8 @@ const handleLanguageClick = (language: Language) => {
     </div>
   </div>
   <div class="header__down">
-    <RouterLink to="/" class="btn--router">
-    <BaseButton
-    class="header__down--info" 
-    text="Главная"
-    size="small-size"/></RouterLink>
-    <BaseButton
-    class="header__down--info" 
-    text="Женщины"
-    size="small-size"/>
-    <BaseButton
-    class="header__down--info" 
-    text="Одежда"
-    size="small-size"/>
-    <BaseButton
-    class="header__down--info-grey" 
-    text="Кофты"
-    size="small-size"
-    
-    />
+   <BreadCrumb :items="breadcrumbItems"
+    />  <router-view />
   </div>
   
 </template>

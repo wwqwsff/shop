@@ -7,6 +7,7 @@ interface Item {
   title: string
   routeKey: string
 }
+
 const categories = {
   women: { text: 'ЖЕНЩИНЫ' },
   men: { text: 'МУЖЧИНЫ' }
@@ -49,10 +50,6 @@ const allMenuItems: Record<Category, MenuItem[]> = {
       title: 'ДЕКОР ДЛЯ ДОМА',
       items: [{ title: 'Все товары', routeKey: 'all_products' }]
     },
-    {
-      title: 'УКРАШЕНИЯ',
-      items: [{ title: 'Украшения', routeKey: 'jewelry' }]
-    }
   ],
   men: [
     {
