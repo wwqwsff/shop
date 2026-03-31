@@ -1,0 +1,143 @@
+<script setup>
+import { Title, BaseButton, Svg } from './index.ts'
+
+const props = defineProps({
+  product: {
+    type: Object,
+    required: true
+  }
+})
+
+const emit = defineEmits(['remove', 'update-quantity'])
+
+const increaseQuantity = () => {
+  emit('update-quantity', props.product.quantity + 1)
+}
+
+const decreaseQuantity = () => {
+  if (props.product.quantity > 1) {
+    emit('update-quantity', props.product.quantity - 1)
+  }
+}
+
+const removeItem = () => {
+  emit('remove')
+}
+</script>
+
+<template>
+    <div class="container">
+        <div class="image">
+          <img :src="product.thumbnail" :alt="product.title" />
+        </div>
+        <div class="info">
+            <Title :text="product.brand || 'Бренд'" size="size18"/>
+            <Title :text="product.title" size="size16"/>
+            <div class="details" v-if="product.size || product.color">
+              <Title v-if="product.size" 
+                     :text="`Размер: ${product.size}`" 
+                     size="size14" 
+                     color="grey"/>
+              <Title v-if="product.color" 
+                     :text="`Цвет: ${product.color}`" 
+                     size="size14" 
+                     color="grey"/>
+            </div>
+            <Title :text="`${product.price} руб`" size="size16" color="dark-blue"/>
+            
+            <div class="quantity-control">
+              <BaseButton class="quantity-control-btn" @click="decreaseQuantity" text="-" size="small" />
+              <span class="quantity">{{ product.quantity }}</span>
+              <BaseButton class="quantity-control-btn" @click="increaseQuantity" text="+" size="small" />
+            </div>
+        </div>
+           <div class="actions">
+            <Svg name="cross" class="svg-dell" size="16" @click="removeItem"></Svg>
+        </div>
+        
+    </div>
+    <hr class="hr--one">
+</template>
+
+<style scoped>
+.quantity-control-btn {
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.quantity-control-btn:hover {
+  transform: translateY(-1px);
+}
+
+.quantity-control-btn:active {
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.08),
+    inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  transform: translateY(1px);
+}
+
+.remove-button{
+   border: none;
+   
+}
+.svg-dell{
+  margin-top: -100px;
+}
+.container{
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+    gap: 20px;
+}
+
+.image{
+    height: 170px;
+    width: 140px;
+    background-color: #f5f5f5;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.info{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 8px;
+}
+.details {
+    display: flex;
+    gap: 15px;
+    margin-top: 5px;
+}
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+.quantity {
+    min-width: 30px;
+    text-align: center;
+    font-weight: bold;
+}
+.actions {
+     margin-left: auto; 
+    align-self: flex-start;
+    padding: 8px;
+    margin-top: -10px; 
+}
+.hr--one {
+    background-color: rgba(128, 128, 128, 0.3);
+    height: 1px;
+    border: none;
+    margin-bottom: 20px;
+    width: 720px;
+}
+</style>
